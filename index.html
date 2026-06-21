@@ -58,6 +58,12 @@ body::before{
   max-width:1760px;margin:0 auto;
   padding:40px 48px 80px;
 }
+.page::before{
+  content:'';position:absolute;top:0;left:48px;right:48px;height:3px;
+  background:linear-gradient(90deg,hsl(210,80%,55%),hsl(265,65%,58%),hsl(34,90%,55%),hsl(152,55%,42%));
+  border-radius:0 0 4px 4px;opacity:.55;
+}
+[data-theme=dark] .page::before{opacity:.7;}
 
 /* ═══ HEADER ═══ */
 .header{
@@ -83,7 +89,15 @@ body::before{
   line-height:.9;letter-spacing:-.02em;
   color:var(--text);
 }
-.title em{font-style:italic;font-weight:500;color:var(--muted);}
+.title em{
+  font-style:italic;font-weight:500;
+  background:linear-gradient(120deg,#8b7fd1 0%,var(--muted) 50%,#c89150 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+[data-theme=dark] .title em{
+  background:linear-gradient(120deg,#a597f0 0%,#9098c0 50%,#e0a868 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
 .subtitle{
   margin-top:12px;
   font-size:.8rem;color:var(--muted);
@@ -275,6 +289,25 @@ body::before{
   display:flex;align-items:center;justify-content:space-between;
   gap:6px;
 }
+.day-col.is-today{
+  border-color:hsla(210,80%,55%,.45);
+  box-shadow:0 0 0 2px hsla(210,80%,55%,.14),var(--shadow);
+}
+[data-theme=dark] .day-col.is-today{
+  border-color:hsla(210,75%,62%,.4);
+  box-shadow:0 0 0 2px hsla(210,75%,62%,.18),var(--shadow);
+}
+.day-col.is-today .day-hd{background:linear-gradient(120deg,hsla(210,80%,55%,.12),hsla(265,65%,58%,.05));}
+.today-tag{
+  font-family:'DM Mono',monospace;font-size:.56rem;font-weight:700;
+  color:hsl(210,75%,42%);letter-spacing:.1em;text-transform:uppercase;
+  display:flex;align-items:center;gap:5px;
+}
+[data-theme=dark] .today-tag{color:hsl(210,80%,72%);}
+.today-pulse{
+  width:6px;height:6px;border-radius:50%;background:hsl(210,80%,52%);
+  flex-shrink:0;animation:pulse 2s infinite;
+}
 .day-chevron{display:none;font-size:1rem;color:var(--muted);transition:transform .25s;}
 .day-name{
   font-family:'Playfair Display',serif;
@@ -308,7 +341,7 @@ body::before{
 }
 [data-theme=dark] .card::after{background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);}
 .card.hidden{display:none;}
-.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);}
+.card:hover{transform:translateY(-3px) scale(1.012);box-shadow:var(--shadow-hover);filter:saturate(1.08);}
 .ci{padding-left:8px;}
 .card-tags{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:3px;}
 .tag{
@@ -340,196 +373,215 @@ body::before{
 [data-theme=dark] .mp{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08);}
 .mp svg{width:8px;height:8px;opacity:.45;flex-shrink:0;}
 
-/* ═══ COURSE COLOUR SYSTEM — Stream-coded palette ═══
-   Business  → amber / cognac / rose
-   Engineering → emerald / teal / pine
-   IT        → indigo / violet / cobalt
-   Shared    → slate bridge
-═══════════════════════════════════════════════════ */
+/* ═══ 19-COURSE COLOUR SYSTEM ═══
+   Business  (MCD2xxx)          → bold warm palette: crimson · amber · coral · gold · rose
+   Engineering (MCD4390–4600)   → vivid cool greens: emerald · teal · pine · mint · sky
+   IT (MCD4700–4770 + MCD2130)  → electric cool: electric indigo · violet · cobalt · purple · blue
+   Shared classes get thicker left border (5px) as visual signal
+════════════════════════════════════════════════════════════════ */
 
-/* ── BUSINESS ── */
-.cc-MCD2020{background:hsl(36,100%,96%);border-color:hsl(36,80%,78%);}
-.cc-MCD2020::before{background:hsl(36,90%,50%);}
-.cc-MCD2020 .card-time{color:hsl(36,85%,32%);}
-.cc-MCD2020:hover{box-shadow:0 8px 28px hsla(36,90%,50%,.22);}
-.ct-MCD2020{background:hsla(36,90%,50%,.13);color:hsl(36,80%,28%);border-color:hsla(36,90%,50%,.25);}
-[data-theme=dark] .cc-MCD2020{background:hsla(36,90%,50%,.16);border-color:hsla(36,90%,50%,.32);}
-[data-theme=dark] .cc-MCD2020 .card-time{color:hsl(36,80%,72%);}
-[data-theme=dark] .ct-MCD2020{background:hsla(36,90%,50%,.2);color:hsl(36,80%,72%);border-color:hsla(36,90%,50%,.32);}
+/* ─── BUSINESS ─────────────────────────────────────────────── */
+/* MCD2020 Micro Economics — warm amber */
+.cc-MCD2020{background:linear-gradient(135deg,hsl(38,100%,97%) 0%,hsl(38,90%,93%) 100%);border-color:hsl(38,82%,72%);}
+.cc-MCD2020::before{background:linear-gradient(180deg,hsl(38,92%,52%),hsl(28,90%,48%));}
+.cc-MCD2020 .card-time{color:hsl(38,88%,30%);}
+.cc-MCD2020:hover{box-shadow:0 10px 32px hsla(38,92%,52%,.28),0 2px 8px hsla(38,92%,52%,.12);}
+.ct-MCD2020{background:hsla(38,92%,52%,.14);color:hsl(38,82%,26%);border-color:hsla(38,92%,52%,.28);}
+[data-theme=dark] .cc-MCD2020{background:linear-gradient(135deg,hsla(38,90%,50%,.18) 0%,hsla(38,90%,50%,.1) 100%);border-color:hsla(38,90%,50%,.36);}
+[data-theme=dark] .cc-MCD2020 .card-time{color:hsl(38,82%,72%);}
+[data-theme=dark] .ct-MCD2020{background:hsla(38,92%,52%,.22);color:hsl(38,82%,74%);border-color:hsla(38,92%,52%,.34);}
 
-.cc-MCD2030{background:hsl(28,90%,96%);border-color:hsl(28,72%,78%);}
-.cc-MCD2030::before{background:hsl(28,82%,48%);}
-.cc-MCD2030 .card-time{color:hsl(28,78%,30%);}
-.cc-MCD2030:hover{box-shadow:0 8px 28px hsla(28,82%,48%,.22);}
-.ct-MCD2030{background:hsla(28,82%,48%,.13);color:hsl(28,75%,26%);border-color:hsla(28,82%,48%,.25);}
-[data-theme=dark] .cc-MCD2030{background:hsla(28,82%,48%,.16);border-color:hsla(28,82%,48%,.32);}
-[data-theme=dark] .cc-MCD2030 .card-time{color:hsl(28,72%,70%);}
-[data-theme=dark] .ct-MCD2030{background:hsla(28,82%,48%,.2);color:hsl(28,72%,70%);border-color:hsla(28,82%,48%,.32);}
+/* MCD2030 Managerial Communication — burnt orange */
+.cc-MCD2030{background:linear-gradient(135deg,hsl(22,100%,97%) 0%,hsl(22,88%,93%) 100%);border-color:hsl(22,80%,74%);}
+.cc-MCD2030::before{background:linear-gradient(180deg,hsl(22,88%,54%),hsl(12,85%,50%));}
+.cc-MCD2030 .card-time{color:hsl(22,84%,30%);}
+.cc-MCD2030:hover{box-shadow:0 10px 32px hsla(22,88%,54%,.28),0 2px 8px hsla(22,88%,54%,.12);}
+.ct-MCD2030{background:hsla(22,88%,54%,.14);color:hsl(22,80%,26%);border-color:hsla(22,88%,54%,.28);}
+[data-theme=dark] .cc-MCD2030{background:linear-gradient(135deg,hsla(22,88%,50%,.18) 0%,hsla(22,88%,50%,.1) 100%);border-color:hsla(22,88%,50%,.36);}
+[data-theme=dark] .cc-MCD2030 .card-time{color:hsl(22,80%,72%);}
+[data-theme=dark] .ct-MCD2030{background:hsla(22,88%,54%,.22);color:hsl(22,80%,74%);border-color:hsla(22,88%,54%,.34);}
 
-.cc-MCD2040{background:hsl(220,40%,96%);border-color:hsl(220,40%,80%);}
-.cc-MCD2040::before{background:hsl(220,65%,52%);width:5px;}
-.cc-MCD2040 .card-time{color:hsl(220,60%,34%);}
-.cc-MCD2040:hover{box-shadow:0 8px 28px hsla(220,65%,52%,.22);}
-.ct-MCD2040{background:hsla(220,65%,52%,.13);color:hsl(220,58%,30%);border-color:hsla(220,65%,52%,.25);}
-[data-theme=dark] .cc-MCD2040{background:hsla(220,65%,52%,.18);border-color:hsla(220,65%,52%,.35);}
-[data-theme=dark] .cc-MCD2040 .card-time{color:hsl(220,58%,76%);}
-[data-theme=dark] .ct-MCD2040{background:hsla(220,65%,52%,.22);color:hsl(220,58%,76%);border-color:hsla(220,65%,52%,.35);}
+/* MCD2040 Managing People — SHARED slate-blue, thick border */
+.cc-MCD2040{background:linear-gradient(135deg,hsl(222,80%,97%) 0%,hsl(248,60%,95%) 100%);border-color:hsl(232,65%,76%);}
+.cc-MCD2040::before{background:linear-gradient(180deg,hsl(222,75%,54%),hsl(248,70%,58%));width:5px;}
+.cc-MCD2040 .card-time{color:hsl(232,70%,36%);}
+.cc-MCD2040:hover{box-shadow:0 10px 32px hsla(232,70%,56%,.28),0 2px 8px hsla(232,70%,56%,.12);}
+.ct-MCD2040{background:hsla(232,70%,56%,.15);color:hsl(232,65%,30%);border-color:hsla(232,70%,56%,.30);}
+[data-theme=dark] .cc-MCD2040{background:linear-gradient(135deg,hsla(222,72%,56%,.2) 0%,hsla(248,68%,58%,.12) 100%);border-color:hsla(232,68%,60%,.42);}
+[data-theme=dark] .cc-MCD2040 .card-time{color:hsl(232,65%,78%);}
+[data-theme=dark] .ct-MCD2040{background:hsla(232,70%,56%,.26);color:hsl(232,65%,80%);border-color:hsla(232,70%,56%,.42);}
 
-.cc-MCD2050{background:hsl(14,90%,96%);border-color:hsl(14,75%,80%);}
-.cc-MCD2050::before{background:hsl(14,85%,52%);}
-.cc-MCD2050 .card-time{color:hsl(14,80%,34%);}
-.cc-MCD2050:hover{box-shadow:0 8px 28px hsla(14,85%,52%,.22);}
-.ct-MCD2050{background:hsla(14,85%,52%,.13);color:hsl(14,78%,30%);border-color:hsla(14,85%,52%,.25);}
-[data-theme=dark] .cc-MCD2050{background:hsla(14,85%,52%,.16);border-color:hsla(14,85%,52%,.32);}
-[data-theme=dark] .cc-MCD2050 .card-time{color:hsl(14,72%,74%);}
-[data-theme=dark] .ct-MCD2050{background:hsla(14,85%,52%,.2);color:hsl(14,72%,74%);border-color:hsla(14,85%,52%,.32);}
+/* MCD2050 Marketing 1 — coral red */
+.cc-MCD2050{background:linear-gradient(135deg,hsl(8,95%,97%) 0%,hsl(8,85%,93%) 100%);border-color:hsl(8,80%,74%);}
+.cc-MCD2050::before{background:linear-gradient(180deg,hsl(8,88%,56%),hsl(350,82%,52%));}
+.cc-MCD2050 .card-time{color:hsl(8,84%,32%);}
+.cc-MCD2050:hover{box-shadow:0 10px 32px hsla(8,88%,56%,.28),0 2px 8px hsla(8,88%,56%,.12);}
+.ct-MCD2050{background:hsla(8,88%,56%,.14);color:hsl(8,80%,28%);border-color:hsla(8,88%,56%,.28);}
+[data-theme=dark] .cc-MCD2050{background:linear-gradient(135deg,hsla(8,88%,52%,.18) 0%,hsla(8,88%,52%,.1) 100%);border-color:hsla(8,88%,52%,.36);}
+[data-theme=dark] .cc-MCD2050 .card-time{color:hsl(8,80%,74%);}
+[data-theme=dark] .ct-MCD2050{background:hsla(8,88%,56%,.22);color:hsl(8,80%,76%);border-color:hsla(8,88%,56%,.34);}
 
-.cc-MCD2070{background:hsl(45,90%,95%);border-color:hsl(45,78%,76%);}
-.cc-MCD2070::before{background:hsl(45,88%,44%);}
-.cc-MCD2070 .card-time{color:hsl(45,84%,28%);}
-.cc-MCD2070:hover{box-shadow:0 8px 28px hsla(45,88%,44%,.22);}
-.ct-MCD2070{background:hsla(45,88%,44%,.13);color:hsl(45,80%,24%);border-color:hsla(45,88%,44%,.25);}
-[data-theme=dark] .cc-MCD2070{background:hsla(45,88%,44%,.16);border-color:hsla(45,88%,44%,.32);}
-[data-theme=dark] .cc-MCD2070 .card-time{color:hsl(45,76%,68%);}
-[data-theme=dark] .ct-MCD2070{background:hsla(45,88%,44%,.2);color:hsl(45,76%,68%);border-color:hsla(45,88%,44%,.32);}
+/* MCD2070 Business Law — golden yellow */
+.cc-MCD2070{background:linear-gradient(135deg,hsl(46,100%,96%) 0%,hsl(46,90%,91%) 100%);border-color:hsl(46,85%,68%);}
+.cc-MCD2070::before{background:linear-gradient(180deg,hsl(46,90%,46%),hsl(36,88%,44%));}
+.cc-MCD2070 .card-time{color:hsl(46,86%,26%);}
+.cc-MCD2070:hover{box-shadow:0 10px 32px hsla(46,90%,46%,.28),0 2px 8px hsla(46,90%,46%,.12);}
+.ct-MCD2070{background:hsla(46,90%,46%,.15);color:hsl(46,82%,22%);border-color:hsla(46,90%,46%,.30);}
+[data-theme=dark] .cc-MCD2070{background:linear-gradient(135deg,hsla(46,88%,46%,.18) 0%,hsla(46,88%,46%,.1) 100%);border-color:hsla(46,88%,46%,.36);}
+[data-theme=dark] .cc-MCD2070 .card-time{color:hsl(46,82%,68%);}
+[data-theme=dark] .ct-MCD2070{background:hsla(46,90%,46%,.22);color:hsl(46,82%,70%);border-color:hsla(46,90%,46%,.34);}
 
-.cc-MCD2080{background:hsl(22,85%,96%);border-color:hsl(22,70%,80%);}
-.cc-MCD2080::before{background:hsl(22,80%,50%);}
-.cc-MCD2080 .card-time{color:hsl(22,76%,32%);}
-.cc-MCD2080:hover{box-shadow:0 8px 28px hsla(22,80%,50%,.22);}
-.ct-MCD2080{background:hsla(22,80%,50%,.13);color:hsl(22,74%,28%);border-color:hsla(22,80%,50%,.25);}
-[data-theme=dark] .cc-MCD2080{background:hsla(22,80%,50%,.16);border-color:hsla(22,80%,50%,.32);}
-[data-theme=dark] .cc-MCD2080 .card-time{color:hsl(22,70%,72%);}
-[data-theme=dark] .ct-MCD2080{background:hsla(22,80%,50%,.2);color:hsl(22,70%,72%);border-color:hsla(22,80%,50%,.32);}
+/* MCD2080 Business Statistics — terracotta */
+.cc-MCD2080{background:linear-gradient(135deg,hsl(16,90%,97%) 0%,hsl(16,80%,93%) 100%);border-color:hsl(16,78%,72%);}
+.cc-MCD2080::before{background:linear-gradient(180deg,hsl(16,82%,52%),hsl(6,80%,48%));}
+.cc-MCD2080 .card-time{color:hsl(16,78%,30%);}
+.cc-MCD2080:hover{box-shadow:0 10px 32px hsla(16,82%,52%,.28),0 2px 8px hsla(16,82%,52%,.12);}
+.ct-MCD2080{background:hsla(16,82%,52%,.14);color:hsl(16,75%,26%);border-color:hsla(16,82%,52%,.28);}
+[data-theme=dark] .cc-MCD2080{background:linear-gradient(135deg,hsla(16,80%,50%,.18) 0%,hsla(16,80%,50%,.1) 100%);border-color:hsla(16,80%,50%,.36);}
+[data-theme=dark] .cc-MCD2080 .card-time{color:hsl(16,75%,72%);}
+[data-theme=dark] .ct-MCD2080{background:hsla(16,82%,52%,.22);color:hsl(16,75%,74%);border-color:hsla(16,82%,52%,.34);}
 
-.cc-MCD2160{background:hsl(348,70%,96%);border-color:hsl(348,60%,82%);}
-.cc-MCD2160::before{background:hsl(348,72%,50%);}
-.cc-MCD2160 .card-time{color:hsl(348,68%,34%);}
-.cc-MCD2160:hover{box-shadow:0 8px 28px hsla(348,72%,50%,.22);}
-.ct-MCD2160{background:hsla(348,72%,50%,.13);color:hsl(348,64%,30%);border-color:hsla(348,72%,50%,.25);}
-[data-theme=dark] .cc-MCD2160{background:hsla(348,72%,50%,.16);border-color:hsla(348,72%,50%,.32);}
-[data-theme=dark] .cc-MCD2160 .card-time{color:hsl(348,60%,76%);}
-[data-theme=dark] .ct-MCD2160{background:hsla(348,72%,50%,.2);color:hsl(348,60%,76%);border-color:hsla(348,72%,50%,.32);}
+/* MCD2160 Intro Financial Accounting — crimson rose */
+.cc-MCD2160{background:linear-gradient(135deg,hsl(350,80%,97%) 0%,hsl(350,70%,93%) 100%);border-color:hsl(350,68%,76%);}
+.cc-MCD2160::before{background:linear-gradient(180deg,hsl(350,74%,52%),hsl(338,72%,48%));}
+.cc-MCD2160 .card-time{color:hsl(350,70%,32%);}
+.cc-MCD2160:hover{box-shadow:0 10px 32px hsla(350,74%,52%,.28),0 2px 8px hsla(350,74%,52%,.12);}
+.ct-MCD2160{background:hsla(350,74%,52%,.14);color:hsl(350,66%,28%);border-color:hsla(350,74%,52%,.28);}
+[data-theme=dark] .cc-MCD2160{background:linear-gradient(135deg,hsla(350,72%,50%,.18) 0%,hsla(350,72%,50%,.1) 100%);border-color:hsla(350,72%,50%,.36);}
+[data-theme=dark] .cc-MCD2160 .card-time{color:hsl(350,66%,74%);}
+[data-theme=dark] .ct-MCD2160{background:hsla(350,74%,52%,.22);color:hsl(350,66%,76%);border-color:hsla(350,74%,52%,.34);}
 
-.cc-MCD2170{background:hsl(330,60%,96%);border-color:hsl(330,52%,84%);}
-.cc-MCD2170::before{background:hsl(330,65%,52%);}
-.cc-MCD2170 .card-time{color:hsl(330,62%,36%);}
-.cc-MCD2170:hover{box-shadow:0 8px 28px hsla(330,65%,52%,.22);}
-.ct-MCD2170{background:hsla(330,65%,52%,.13);color:hsl(330,58%,32%);border-color:hsla(330,65%,52%,.25);}
-[data-theme=dark] .cc-MCD2170{background:hsla(330,65%,52%,.16);border-color:hsla(330,65%,52%,.32);}
-[data-theme=dark] .cc-MCD2170 .card-time{color:hsl(330,55%,76%);}
-[data-theme=dark] .ct-MCD2170{background:hsla(330,65%,52%,.2);color:hsl(330,55%,76%);border-color:hsla(330,65%,52%,.32);}
+/* MCD2170 Foundations of Finance — hot pink */
+.cc-MCD2170{background:linear-gradient(135deg,hsl(332,75%,97%) 0%,hsl(332,65%,93%) 100%);border-color:hsl(332,62%,78%);}
+.cc-MCD2170::before{background:linear-gradient(180deg,hsl(332,70%,54%),hsl(320,68%,50%));}
+.cc-MCD2170 .card-time{color:hsl(332,68%,34%);}
+.cc-MCD2170:hover{box-shadow:0 10px 32px hsla(332,70%,54%,.28),0 2px 8px hsla(332,70%,54%,.12);}
+.ct-MCD2170{background:hsla(332,70%,54%,.14);color:hsl(332,64%,30%);border-color:hsla(332,70%,54%,.28);}
+[data-theme=dark] .cc-MCD2170{background:linear-gradient(135deg,hsla(332,68%,52%,.18) 0%,hsla(332,68%,52%,.1) 100%);border-color:hsla(332,68%,52%,.36);}
+[data-theme=dark] .cc-MCD2170 .card-time{color:hsl(332,64%,76%);}
+[data-theme=dark] .ct-MCD2170{background:hsla(332,70%,54%,.22);color:hsl(332,64%,78%);border-color:hsla(332,70%,54%,.34);}
 
-/* ── ENGINEERING ── */
-.cc-MCD4390{background:hsl(158,60%,95%);border-color:hsl(158,50%,74%);}
-.cc-MCD4390::before{background:hsl(158,72%,36%);}
-.cc-MCD4390 .card-time{color:hsl(158,68%,24%);}
-.cc-MCD4390:hover{box-shadow:0 8px 28px hsla(158,72%,36%,.22);}
-.ct-MCD4390{background:hsla(158,72%,36%,.13);color:hsl(158,65%,21%);border-color:hsla(158,72%,36%,.25);}
-[data-theme=dark] .cc-MCD4390{background:hsla(158,72%,36%,.16);border-color:hsla(158,72%,36%,.32);}
-[data-theme=dark] .cc-MCD4390 .card-time{color:hsl(158,56%,62%);}
-[data-theme=dark] .ct-MCD4390{background:hsla(158,72%,36%,.2);color:hsl(158,56%,62%);border-color:hsla(158,72%,36%,.32);}
+/* ─── ENGINEERING ───────────────────────────────────────────── */
+/* MCD4390 Chemistry 1 — vivid emerald */
+.cc-MCD4390{background:linear-gradient(135deg,hsl(155,75%,96%) 0%,hsl(155,65%,92%) 100%);border-color:hsl(155,58%,68%);}
+.cc-MCD4390::before{background:linear-gradient(180deg,hsl(155,70%,38%),hsl(168,68%,34%));}
+.cc-MCD4390 .card-time{color:hsl(155,66%,24%);}
+.cc-MCD4390:hover{box-shadow:0 10px 32px hsla(155,70%,38%,.28),0 2px 8px hsla(155,70%,38%,.12);}
+.ct-MCD4390{background:hsla(155,70%,38%,.14);color:hsl(155,64%,20%);border-color:hsla(155,70%,38%,.28);}
+[data-theme=dark] .cc-MCD4390{background:linear-gradient(135deg,hsla(155,68%,38%,.18) 0%,hsla(155,68%,38%,.1) 100%);border-color:hsla(155,68%,38%,.36);}
+[data-theme=dark] .cc-MCD4390 .card-time{color:hsl(155,60%,62%);}
+[data-theme=dark] .ct-MCD4390{background:hsla(155,70%,38%,.22);color:hsl(155,60%,64%);border-color:hsla(155,70%,38%,.34);}
 
-.cc-MCD4490{background:hsl(172,55%,95%);border-color:hsl(172,48%,74%);}
-.cc-MCD4490::before{background:hsl(172,68%,34%);}
-.cc-MCD4490 .card-time{color:hsl(172,65%,22%);}
-.cc-MCD4490:hover{box-shadow:0 8px 28px hsla(172,68%,34%,.22);}
-.ct-MCD4490{background:hsla(172,68%,34%,.13);color:hsl(172,62%,19%);border-color:hsla(172,68%,34%,.25);}
-[data-theme=dark] .cc-MCD4490{background:hsla(172,68%,34%,.16);border-color:hsla(172,68%,34%,.32);}
-[data-theme=dark] .cc-MCD4490 .card-time{color:hsl(172,52%,60%);}
-[data-theme=dark] .ct-MCD4490{background:hsla(172,68%,34%,.2);color:hsl(172,52%,60%);border-color:hsla(172,68%,34%,.32);}
+/* MCD4490 Advanced Mathematics — deep teal */
+.cc-MCD4490{background:linear-gradient(135deg,hsl(174,70%,96%) 0%,hsl(174,60%,91%) 100%);border-color:hsl(174,54%,66%);}
+.cc-MCD4490::before{background:linear-gradient(180deg,hsl(174,65%,36%),hsl(185,62%,32%));}
+.cc-MCD4490 .card-time{color:hsl(174,62%,22%);}
+.cc-MCD4490:hover{box-shadow:0 10px 32px hsla(174,65%,36%,.28),0 2px 8px hsla(174,65%,36%,.12);}
+.ct-MCD4490{background:hsla(174,65%,36%,.14);color:hsl(174,60%,19%);border-color:hsla(174,65%,36%,.28);}
+[data-theme=dark] .cc-MCD4490{background:linear-gradient(135deg,hsla(174,62%,36%,.18) 0%,hsla(174,62%,36%,.1) 100%);border-color:hsla(174,62%,36%,.36);}
+[data-theme=dark] .cc-MCD4490 .card-time{color:hsl(174,56%,60%);}
+[data-theme=dark] .ct-MCD4490{background:hsla(174,65%,36%,.22);color:hsl(174,56%,62%);border-color:hsla(174,65%,36%,.34);}
 
-.cc-MCD4520{background:hsl(145,55%,95%);border-color:hsl(145,50%,72%);}
-.cc-MCD4520::before{background:hsl(145,65%,36%);}
-.cc-MCD4520 .card-time{color:hsl(145,62%,24%);}
-.cc-MCD4520:hover{box-shadow:0 8px 28px hsla(145,65%,36%,.22);}
-.ct-MCD4520{background:hsla(145,65%,36%,.13);color:hsl(145,58%,21%);border-color:hsla(145,65%,36%,.25);}
-[data-theme=dark] .cc-MCD4520{background:hsla(145,65%,36%,.16);border-color:hsla(145,65%,36%,.32);}
-[data-theme=dark] .cc-MCD4520 .card-time{color:hsl(145,50%,62%);}
-[data-theme=dark] .ct-MCD4520{background:hsla(145,65%,36%,.2);color:hsl(145,50%,62%);border-color:hsla(145,65%,36%,.32);}
+/* MCD4520 Engineering Methods — forest green */
+.cc-MCD4520{background:linear-gradient(135deg,hsl(142,65%,96%) 0%,hsl(142,56%,91%) 100%);border-color:hsl(142,50%,68%);}
+.cc-MCD4520::before{background:linear-gradient(180deg,hsl(142,62%,38%),hsl(130,58%,34%));}
+.cc-MCD4520 .card-time{color:hsl(142,58%,24%);}
+.cc-MCD4520:hover{box-shadow:0 10px 32px hsla(142,62%,38%,.28),0 2px 8px hsla(142,62%,38%,.12);}
+.ct-MCD4520{background:hsla(142,62%,38%,.14);color:hsl(142,56%,21%);border-color:hsla(142,62%,38%,.28);}
+[data-theme=dark] .cc-MCD4520{background:linear-gradient(135deg,hsla(142,60%,38%,.18) 0%,hsla(142,60%,38%,.1) 100%);border-color:hsla(142,60%,38%,.36);}
+[data-theme=dark] .cc-MCD4520 .card-time{color:hsl(142,54%,62%);}
+[data-theme=dark] .ct-MCD4520{background:hsla(142,62%,38%,.22);color:hsl(142,54%,64%);border-color:hsla(142,62%,38%,.34);}
 
-.cc-MCD4530{background:hsl(130,48%,95%);border-color:hsl(130,44%,74%);}
-.cc-MCD4530::before{background:hsl(130,60%,38%);}
-.cc-MCD4530 .card-time{color:hsl(130,56%,26%);}
-.cc-MCD4530:hover{box-shadow:0 8px 28px hsla(130,60%,38%,.22);}
-.ct-MCD4530{background:hsla(130,60%,38%,.13);color:hsl(130,54%,23%);border-color:hsla(130,60%,38%,.25);}
-[data-theme=dark] .cc-MCD4530{background:hsla(130,60%,38%,.16);border-color:hsla(130,60%,38%,.32);}
-[data-theme=dark] .cc-MCD4530 .card-time{color:hsl(130,48%,62%);}
-[data-theme=dark] .ct-MCD4530{background:hsla(130,60%,38%,.2);color:hsl(130,48%,62%);border-color:hsla(130,60%,38%,.32);}
+/* MCD4530 Engineering Design — lime green */
+.cc-MCD4530{background:linear-gradient(135deg,hsl(126,60%,96%) 0%,hsl(126,52%,91%) 100%);border-color:hsl(126,48%,68%);}
+.cc-MCD4530::before{background:linear-gradient(180deg,hsl(126,58%,40%),hsl(112,55%,36%));}
+.cc-MCD4530 .card-time{color:hsl(126,54%,26%);}
+.cc-MCD4530:hover{box-shadow:0 10px 32px hsla(126,58%,40%,.28),0 2px 8px hsla(126,58%,40%,.12);}
+.ct-MCD4530{background:hsla(126,58%,40%,.14);color:hsl(126,52%,23%);border-color:hsla(126,58%,40%,.28);}
+[data-theme=dark] .cc-MCD4530{background:linear-gradient(135deg,hsla(126,56%,40%,.18) 0%,hsla(126,56%,40%,.1) 100%);border-color:hsla(126,56%,40%,.36);}
+[data-theme=dark] .cc-MCD4530 .card-time{color:hsl(126,50%,62%);}
+[data-theme=dark] .ct-MCD4530{background:hsla(126,58%,40%,.22);color:hsl(126,50%,64%);border-color:hsla(126,58%,40%,.34);}
 
-.cc-MCD4540{background:hsl(185,55%,94%);border-color:hsl(185,48%,72%);}
-.cc-MCD4540::before{background:hsl(185,72%,34%);}
-.cc-MCD4540 .card-time{color:hsl(185,68%,22%);}
-.cc-MCD4540:hover{box-shadow:0 8px 28px hsla(185,72%,34%,.22);}
-.ct-MCD4540{background:hsla(185,72%,34%,.13);color:hsl(185,65%,19%);border-color:hsla(185,72%,34%,.25);}
-[data-theme=dark] .cc-MCD4540{background:hsla(185,72%,34%,.16);border-color:hsla(185,72%,34%,.32);}
-[data-theme=dark] .cc-MCD4540 .card-time{color:hsl(185,56%,60%);}
-[data-theme=dark] .ct-MCD4540{background:hsla(185,72%,34%,.2);color:hsl(185,56%,60%);border-color:hsla(185,72%,34%,.32);}
+/* MCD4540 Engineering Smart Systems — cyan teal */
+.cc-MCD4540{background:linear-gradient(135deg,hsl(186,75%,96%) 0%,hsl(186,65%,91%) 100%);border-color:hsl(186,60%,66%);}
+.cc-MCD4540::before{background:linear-gradient(180deg,hsl(186,72%,36%),hsl(196,68%,32%));}
+.cc-MCD4540 .card-time{color:hsl(186,68%,22%);}
+.cc-MCD4540:hover{box-shadow:0 10px 32px hsla(186,72%,36%,.28),0 2px 8px hsla(186,72%,36%,.12);}
+.ct-MCD4540{background:hsla(186,72%,36%,.14);color:hsl(186,66%,19%);border-color:hsla(186,72%,36%,.28);}
+[data-theme=dark] .cc-MCD4540{background:linear-gradient(135deg,hsla(186,70%,36%,.18) 0%,hsla(186,70%,36%,.1) 100%);border-color:hsla(186,70%,36%,.36);}
+[data-theme=dark] .cc-MCD4540 .card-time{color:hsl(186,62%,60%);}
+[data-theme=dark] .ct-MCD4540{background:hsla(186,72%,36%,.22);color:hsl(186,62%,62%);border-color:hsla(186,72%,36%,.34);}
 
-.cc-MCD4600{background:hsl(200,60%,95%);border-color:hsl(200,52%,74%);}
-.cc-MCD4600::before{background:hsl(200,78%,38%);}
-.cc-MCD4600 .card-time{color:hsl(200,74%,26%);}
-.cc-MCD4600:hover{box-shadow:0 8px 28px hsla(200,78%,38%,.22);}
-.ct-MCD4600{background:hsla(200,78%,38%,.13);color:hsl(200,70%,23%);border-color:hsla(200,78%,38%,.25);}
-[data-theme=dark] .cc-MCD4600{background:hsla(200,78%,38%,.16);border-color:hsla(200,78%,38%,.32);}
-[data-theme=dark] .cc-MCD4600 .card-time{color:hsl(200,62%,66%);}
-[data-theme=dark] .ct-MCD4600{background:hsla(200,78%,38%,.2);color:hsl(200,62%,66%);border-color:hsla(200,78%,38%,.32);}
+/* MCD4600 Intermediate Physics — sky blue */
+.cc-MCD4600{background:linear-gradient(135deg,hsl(202,80%,97%) 0%,hsl(202,70%,92%) 100%);border-color:hsl(202,65%,70%);}
+.cc-MCD4600::before{background:linear-gradient(180deg,hsl(202,76%,42%),hsl(215,72%,38%));}
+.cc-MCD4600 .card-time{color:hsl(202,72%,28%);}
+.cc-MCD4600:hover{box-shadow:0 10px 32px hsla(202,76%,42%,.28),0 2px 8px hsla(202,76%,42%,.12);}
+.ct-MCD4600{background:hsla(202,76%,42%,.14);color:hsl(202,70%,25%);border-color:hsla(202,76%,42%,.28);}
+[data-theme=dark] .cc-MCD4600{background:linear-gradient(135deg,hsla(202,74%,42%,.18) 0%,hsla(202,74%,42%,.1) 100%);border-color:hsla(202,74%,42%,.36);}
+[data-theme=dark] .cc-MCD4600 .card-time{color:hsl(202,66%,66%);}
+[data-theme=dark] .ct-MCD4600{background:hsla(202,76%,42%,.22);color:hsl(202,66%,68%);border-color:hsla(202,76%,42%,.34);}
 
-/* ── IT ── */
-.cc-MCD2130{background:hsl(258,70%,97%);border-color:hsl(258,58%,84%);}
-.cc-MCD2130::before{background:hsl(258,80%,58%);}
-.cc-MCD2130 .card-time{color:hsl(258,76%,40%);}
-.cc-MCD2130:hover{box-shadow:0 8px 28px hsla(258,80%,58%,.22);}
-.ct-MCD2130{background:hsla(258,80%,58%,.13);color:hsl(258,72%,36%);border-color:hsla(258,80%,58%,.25);}
-[data-theme=dark] .cc-MCD2130{background:hsla(258,80%,58%,.16);border-color:hsla(258,80%,58%,.32);}
-[data-theme=dark] .cc-MCD2130 .card-time{color:hsl(258,66%,78%);}
-[data-theme=dark] .ct-MCD2130{background:hsla(258,80%,58%,.2);color:hsl(258,66%,78%);border-color:hsla(258,80%,58%,.32);}
+/* ─── IT ────────────────────────────────────────────────────── */
+/* MCD2130 Functions & Applications — medium violet */
+.cc-MCD2130{background:linear-gradient(135deg,hsl(260,80%,97%) 0%,hsl(260,70%,93%) 100%);border-color:hsl(260,65%,78%);}
+.cc-MCD2130::before{background:linear-gradient(180deg,hsl(260,78%,60%),hsl(272,74%,56%));}
+.cc-MCD2130 .card-time{color:hsl(260,74%,38%);}
+.cc-MCD2130:hover{box-shadow:0 10px 32px hsla(260,78%,60%,.28),0 2px 8px hsla(260,78%,60%,.12);}
+.ct-MCD2130{background:hsla(260,78%,60%,.14);color:hsl(260,70%,34%);border-color:hsla(260,78%,60%,.28);}
+[data-theme=dark] .cc-MCD2130{background:linear-gradient(135deg,hsla(260,76%,58%,.18) 0%,hsla(260,76%,58%,.1) 100%);border-color:hsla(260,76%,58%,.36);}
+[data-theme=dark] .cc-MCD2130 .card-time{color:hsl(260,68%,78%);}
+[data-theme=dark] .ct-MCD2130{background:hsla(260,78%,60%,.22);color:hsl(260,68%,80%);border-color:hsla(260,78%,60%,.34);}
 
-.cc-MCD4700{background:hsl(242,100%,97%);border-color:hsl(242,72%,78%);}
-.cc-MCD4700::before{background:hsl(242,88%,56%);width:5px;}
-.cc-MCD4700 .card-time{color:hsl(242,85%,40%);}
-.cc-MCD4700:hover{box-shadow:0 8px 32px hsla(242,88%,56%,.30);}
-.ct-MCD4700{background:hsla(242,88%,56%,.15);color:hsl(242,80%,36%);border-color:hsla(242,88%,56%,.30);}
-[data-theme=dark] .cc-MCD4700{background:hsla(242,88%,56%,.22);border-color:hsla(242,88%,56%,.42);}
-[data-theme=dark] .cc-MCD4700 .card-time{color:hsl(242,80%,80%);}
-[data-theme=dark] .ct-MCD4700{background:hsla(242,88%,56%,.26);color:hsl(242,80%,80%);border-color:hsla(242,88%,56%,.42);}
+/* MCD4700 Computer Systems & Networking — SHARED electric indigo, thick border */
+.cc-MCD4700{background:linear-gradient(135deg,hsl(243,100%,98%) 0%,hsl(255,85%,95%) 100%);border-color:hsl(243,75%,74%);}
+.cc-MCD4700::before{background:linear-gradient(180deg,hsl(243,90%,58%),hsl(255,85%,62%));width:5px;}
+.cc-MCD4700 .card-time{color:hsl(243,85%,38%);}
+.cc-MCD4700:hover{box-shadow:0 10px 36px hsla(243,90%,58%,.32),0 2px 10px hsla(243,90%,58%,.16);}
+.ct-MCD4700{background:hsla(243,90%,58%,.16);color:hsl(243,82%,34%);border-color:hsla(243,90%,58%,.32);}
+[data-theme=dark] .cc-MCD4700{background:linear-gradient(135deg,hsla(243,88%,58%,.24) 0%,hsla(255,82%,60%,.14) 100%);border-color:hsla(243,88%,58%,.46);}
+[data-theme=dark] .cc-MCD4700 .card-time{color:hsl(243,82%,80%);}
+[data-theme=dark] .ct-MCD4700{background:hsla(243,90%,58%,.28);color:hsl(243,82%,82%);border-color:hsla(243,90%,58%,.46);}
 
-.cc-MCD4710{background:hsl(230,80%,97%);border-color:hsl(230,65%,82%);}
-.cc-MCD4710::before{background:hsl(230,82%,58%);}
-.cc-MCD4710 .card-time{color:hsl(230,78%,42%);}
-.cc-MCD4710:hover{box-shadow:0 8px 28px hsla(230,82%,58%,.22);}
-.ct-MCD4710{background:hsla(230,82%,58%,.13);color:hsl(230,74%,38%);border-color:hsla(230,82%,58%,.25);}
-[data-theme=dark] .cc-MCD4710{background:hsla(230,82%,58%,.16);border-color:hsla(230,82%,58%,.32);}
-[data-theme=dark] .cc-MCD4710 .card-time{color:hsl(230,70%,78%);}
-[data-theme=dark] .ct-MCD4710{background:hsla(230,82%,58%,.2);color:hsl(230,70%,78%);border-color:hsla(230,82%,58%,.32);}
+/* MCD4710 Intro to Algorithm & Programming — cobalt blue */
+.cc-MCD4710{background:linear-gradient(135deg,hsl(226,85%,97%) 0%,hsl(226,75%,93%) 100%);border-color:hsl(226,70%,74%);}
+.cc-MCD4710::before{background:linear-gradient(180deg,hsl(226,80%,56%),hsl(238,76%,60%));}
+.cc-MCD4710 .card-time{color:hsl(226,76%,36%);}
+.cc-MCD4710:hover{box-shadow:0 10px 32px hsla(226,80%,56%,.28),0 2px 8px hsla(226,80%,56%,.12);}
+.ct-MCD4710{background:hsla(226,80%,56%,.14);color:hsl(226,72%,32%);border-color:hsla(226,80%,56%,.28);}
+[data-theme=dark] .cc-MCD4710{background:linear-gradient(135deg,hsla(226,78%,56%,.18) 0%,hsla(226,78%,56%,.1) 100%);border-color:hsla(226,78%,56%,.36);}
+[data-theme=dark] .cc-MCD4710 .card-time{color:hsl(226,70%,76%);}
+[data-theme=dark] .ct-MCD4710{background:hsla(226,80%,56%,.22);color:hsl(226,70%,78%);border-color:hsla(226,80%,56%,.34);}
 
-.cc-MCD4750{background:hsl(275,70%,97%);border-color:hsl(275,60%,82%);}
-.cc-MCD4750::before{background:hsl(275,78%,52%);}
-.cc-MCD4750 .card-time{color:hsl(275,74%,36%);}
-.cc-MCD4750:hover{box-shadow:0 8px 28px hsla(275,78%,52%,.22);}
-.ct-MCD4750{background:hsla(275,78%,52%,.13);color:hsl(275,70%,32%);border-color:hsla(275,78%,52%,.25);}
-[data-theme=dark] .cc-MCD4750{background:hsla(275,78%,52%,.16);border-color:hsla(275,78%,52%,.32);}
-[data-theme=dark] .cc-MCD4750 .card-time{color:hsl(275,64%,76%);}
-[data-theme=dark] .ct-MCD4750{background:hsla(275,78%,52%,.2);color:hsl(275,64%,76%);border-color:hsla(275,78%,52%,.32);}
+/* MCD4750 Intro to Cyber Security — deep purple */
+.cc-MCD4750{background:linear-gradient(135deg,hsl(278,75%,97%) 0%,hsl(278,65%,93%) 100%);border-color:hsl(278,62%,76%);}
+.cc-MCD4750::before{background:linear-gradient(180deg,hsl(278,74%,54%),hsl(290,70%,50%));}
+.cc-MCD4750 .card-time{color:hsl(278,70%,34%);}
+.cc-MCD4750:hover{box-shadow:0 10px 32px hsla(278,74%,54%,.28),0 2px 8px hsla(278,74%,54%,.12);}
+.ct-MCD4750{background:hsla(278,74%,54%,.14);color:hsl(278,68%,30%);border-color:hsla(278,74%,54%,.28);}
+[data-theme=dark] .cc-MCD4750{background:linear-gradient(135deg,hsla(278,72%,54%,.18) 0%,hsla(278,72%,54%,.1) 100%);border-color:hsla(278,72%,54%,.36);}
+[data-theme=dark] .cc-MCD4750 .card-time{color:hsl(278,64%,76%);}
+[data-theme=dark] .ct-MCD4750{background:hsla(278,74%,54%,.22);color:hsl(278,64%,78%);border-color:hsla(278,74%,54%,.34);}
 
-.cc-MCD4760{background:hsl(218,75%,96%);border-color:hsl(218,62%,82%);}
-.cc-MCD4760::before{background:hsl(218,80%,54%);}
-.cc-MCD4760 .card-time{color:hsl(218,76%,38%);}
-.cc-MCD4760:hover{box-shadow:0 8px 28px hsla(218,80%,54%,.22);}
-.ct-MCD4760{background:hsla(218,80%,54%,.13);color:hsl(218,72%,34%);border-color:hsla(218,80%,54%,.25);}
-[data-theme=dark] .cc-MCD4760{background:hsla(218,80%,54%,.16);border-color:hsla(218,80%,54%,.32);}
-[data-theme=dark] .cc-MCD4760 .card-time{color:hsl(218,66%,76%);}
-[data-theme=dark] .ct-MCD4760{background:hsla(218,80%,54%,.2);color:hsl(218,66%,76%);border-color:hsla(218,80%,54%,.32);}
+/* MCD4760 Foundations of Computing — periwinkle blue */
+.cc-MCD4760{background:linear-gradient(135deg,hsl(216,78%,97%) 0%,hsl(216,68%,93%) 100%);border-color:hsl(216,64%,74%);}
+.cc-MCD4760::before{background:linear-gradient(180deg,hsl(216,76%,56%),hsl(228,72%,60%));}
+.cc-MCD4760 .card-time{color:hsl(216,72%,36%);}
+.cc-MCD4760:hover{box-shadow:0 10px 32px hsla(216,76%,56%,.28),0 2px 8px hsla(216,76%,56%,.12);}
+.ct-MCD4760{background:hsla(216,76%,56%,.14);color:hsl(216,68%,32%);border-color:hsla(216,76%,56%,.28);}
+[data-theme=dark] .cc-MCD4760{background:linear-gradient(135deg,hsla(216,74%,56%,.18) 0%,hsla(216,74%,56%,.1) 100%);border-color:hsla(216,74%,56%,.36);}
+[data-theme=dark] .cc-MCD4760 .card-time{color:hsl(216,66%,76%);}
+[data-theme=dark] .ct-MCD4760{background:hsla(216,76%,56%,.22);color:hsl(216,66%,78%);border-color:hsla(216,76%,56%,.34);}
 
-.cc-MCD4770{background:hsl(248,65%,97%);border-color:hsl(248,55%,84%);}
-.cc-MCD4770::before{background:hsl(248,75%,56%);width:5px;}
-.cc-MCD4770 .card-time{color:hsl(248,70%,40%);}
-.cc-MCD4770:hover{box-shadow:0 8px 28px hsla(248,75%,56%,.22);}
-.ct-MCD4770{background:hsla(248,75%,56%,.13);color:hsl(248,68%,36%);border-color:hsla(248,75%,56%,.25);}
-[data-theme=dark] .cc-MCD4770{background:hsla(248,75%,56%,.18);border-color:hsla(248,75%,56%,.35);}
-[data-theme=dark] .cc-MCD4770 .card-time{color:hsl(248,62%,78%);}
-[data-theme=dark] .ct-MCD4770{background:hsla(248,75%,56%,.22);color:hsl(248,62%,78%);border-color:hsla(248,75%,56%,.35);}
-
+/* MCD4770 Eng/Professional Practice — SHARED violet-blue, thick border */
+.cc-MCD4770{background:linear-gradient(135deg,hsl(250,80%,97%) 0%,hsl(265,70%,95%) 100%);border-color:hsl(255,66%,76%);}
+.cc-MCD4770::before{background:linear-gradient(180deg,hsl(250,78%,58%),hsl(265,74%,62%));width:5px;}
+.cc-MCD4770 .card-time{color:hsl(255,72%,38%);}
+.cc-MCD4770:hover{box-shadow:0 10px 36px hsla(255,76%,58%,.28),0 2px 10px hsla(255,76%,58%,.12);}
+.ct-MCD4770{background:hsla(255,76%,58%,.14);color:hsl(255,68%,34%);border-color:hsla(255,76%,58%,.28);}
+[data-theme=dark] .cc-MCD4770{background:linear-gradient(135deg,hsla(250,76%,58%,.2) 0%,hsla(265,72%,60%,.12) 100%);border-color:hsla(255,74%,60%,.40);}
+[data-theme=dark] .cc-MCD4770 .card-time{color:hsl(255,66%,78%);}
+[data-theme=dark] .ct-MCD4770{background:hsla(255,76%,58%,.24);color:hsl(255,66%,80%);border-color:hsla(255,74%,60%,.40);}
 
 /* ═══ STATS BAR ═══ */
 .stats-bar{
@@ -555,6 +607,14 @@ body::before{
   font-size:1.1rem;
   background:var(--bg2);border:1px solid var(--border2);
 }
+.ico-days{background:linear-gradient(145deg,hsla(210,80%,55%,.16),hsla(210,80%,55%,.05));border-color:hsla(210,80%,55%,.25);}
+.ico-cls{background:linear-gradient(145deg,hsla(265,65%,58%,.16),hsla(265,65%,58%,.05));border-color:hsla(265,65%,58%,.25);}
+.ico-hrs{background:linear-gradient(145deg,hsla(34,90%,55%,.18),hsla(34,90%,55%,.05));border-color:hsla(34,90%,55%,.28);}
+.ico-sub{background:linear-gradient(145deg,hsla(152,60%,42%,.18),hsla(152,60%,42%,.05));border-color:hsla(152,60%,42%,.28);}
+[data-theme=dark] .ico-days{background:linear-gradient(145deg,hsla(210,80%,60%,.22),hsla(210,80%,60%,.06));border-color:hsla(210,80%,60%,.3);}
+[data-theme=dark] .ico-cls{background:linear-gradient(145deg,hsla(265,70%,68%,.22),hsla(265,70%,68%,.06));border-color:hsla(265,70%,68%,.3);}
+[data-theme=dark] .ico-hrs{background:linear-gradient(145deg,hsla(34,90%,60%,.22),hsla(34,90%,60%,.06));border-color:hsla(34,90%,60%,.3);}
+[data-theme=dark] .ico-sub{background:linear-gradient(145deg,hsla(152,65%,55%,.22),hsla(152,65%,55%,.06));border-color:hsla(152,65%,55%,.3);}
 .stat-body{}
 .stat-num{
   font-family:'Playfair Display',serif;
@@ -577,6 +637,18 @@ body::before{
   cursor:pointer;display:flex;align-items:center;justify-content:center;
   animation:fabIn .5s cubic-bezier(.16,1,.3,1) .6s both;
   transition:transform .2s,box-shadow .2s;
+}
+#bot-fab::after{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:2px solid rgba(26,24,22,.18);
+  animation:fabRing 2.6s ease-out infinite;
+  pointer-events:none;
+}
+[data-theme=dark] #bot-fab::after{border-color:rgba(238,240,246,.2);}
+#bot-fab.engaged::after{display:none;}
+@keyframes fabRing{
+  0%{transform:scale(.85);opacity:.65;}
+  100%{transform:scale(1.4);opacity:0;}
 }
 @keyframes fabIn{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
 #bot-fab:hover{transform:scale(1.08);box-shadow:0 8px 32px rgba(0,0,0,.45);}
@@ -855,14 +927,23 @@ body::before{
 [data-theme=dark] .modal{background:var(--surface);border-color:var(--border2);}
 [data-theme=dark] .theme-toggle{background:var(--surface);border-color:var(--border2);}
 [data-theme=dark] .bp-msgs{background:var(--bg);}
-[data-theme=dark] .bm.bot .bm-bbl{background:var(--bg2);border-color:var(--border2);}
+[data-theme=dark] .bm.bot .bm-bubble{background:var(--bg2);border-color:var(--border2);color:var(--text);}
+[data-theme=dark] .bm.user .bm-bubble{background:#e8e4f0;color:#18160f;}
+[data-theme=dark] .bm-bubble strong{color:inherit;}
+[data-theme=dark] .mini-card{background:var(--surface);border-color:var(--border2);}
+[data-theme=dark] .mini-card .mc-name{color:var(--text);}
+[data-theme=dark] .bp-chip{background:var(--bg2);color:#d0cce8;border-color:rgba(255,255,255,.18);}
+[data-theme=dark] .bp-chip:hover{background:var(--text);color:var(--bg);border-color:var(--text);}
+[data-theme=dark] .bp-input-row{background:var(--bg2);border-color:var(--border2);}
+[data-theme=dark] .bp-input{background:var(--surface);border-color:rgba(255,255,255,.18);color:#e8e4f8;}
+[data-theme=dark] .bp-input::placeholder{color:rgba(200,195,220,.45);}
+[data-theme=dark] .bp-send{background:#a090e0;color:#0f0f13;}
 [data-theme=dark] body{background-image:
   radial-gradient(ellipse 70% 50% at 10% 0%,rgba(99,70,229,.12) 0%,transparent 60%),
   radial-gradient(ellipse 60% 40% at 90% 100%,rgba(124,40,200,.08) 0%,transparent 60%),
   url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");}
 
 [data-theme=dark] .eyebrow-dot{background:var(--faint);}
-[data-theme=dark] .stat-ico{background:var(--bg2);border-color:var(--border2);}
 [data-theme=dark] .results-strip{border-color:var(--border);}
 [data-theme=dark] .filter-pill-btn:hover{background:var(--bg2);}
 [data-theme=dark] .chip{background:var(--surface);border-color:var(--border2);}
@@ -916,76 +997,78 @@ body::before{
   <!-- SUNDAY -->
   <div class="day-col" id="dc-sun"><div class="day-hd" onclick="toggleDay('sun')"><span class="day-name">Sunday</span><span class="day-badge" id="b-sun">—</span><span class="day-chevron">›</span></div>
   <div class="cards-wrap" id="l-sun">
-    <div class="card cc-MCD2160" data-stream="biz" data-sem="s2" data-code="MCD2160"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2160">Business · Sem 2</span></div><div class="card-code">MCD2160</div><div class="card-name">Intro to Financial Accounting</div><div class="card-time">8 AM – 10 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
-    <div class="card cc-MCD2170" data-stream="biz" data-sem="s2" data-code="MCD2170"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2170">Business · Sem 2</span></div><div class="card-code">MCD2170</div><div class="card-name">Foundations of Finance</div><div class="card-time">10 AM – 12 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
-    <div class="card cc-MCD2080" data-stream="biz" data-sem="s1" data-code="MCD2080"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2080">Business · Sem 1</span></div><div class="card-code">MCD2080</div><div class="card-name">Business Statistics</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Rajan Ahmad</span></div></div></div>
-    <div class="card cc-MCD4520" data-stream="eng" data-sem="s1" data-code="MCD4520"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4520">Engineering · Sem 1</span></div><div class="card-code">MCD4520</div><div class="card-name">Engineering Methods</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nosin T. Shristi</span></div></div></div>
-    <div class="card cc-MCD4700" data-stream="it" data-sem="s1 s2" data-code="MCD4700"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4700">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4700</div><div class="card-name">Computer Systems &amp; Networking</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
-    <div class="card cc-MCD2040" data-stream="biz it" data-sem="s2" data-code="MCD2040"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2040">Business + IT · Sem 2 · Shared</span></div><div class="card-code">MCD2040</div><div class="card-name">Managing People &amp; Organisations</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 1</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Zoeb Ur Rahman</span></div></div></div>
-    <div class="card cc-MCD2070" data-stream="biz" data-sem="s2" data-code="MCD2070"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2070">Business · Sem 2</span></div><div class="card-code">MCD2070</div><div class="card-name">Business Law</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 512</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Abhishek Chakravarty</span></div></div></div>
-    <div class="card cc-MCD4600" data-stream="eng" data-sem="s1" data-code="MCD4600"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4600">Engineering · Sem 1</span></div><div class="card-code">MCD4600</div><div class="card-name">Intermediate Physics</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
-    <div class="card cc-MCD4710" data-stream="it" data-sem="s1" data-code="MCD4710"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4710">IT · Sem 1</span></div><div class="card-code">MCD4710</div><div class="card-name">Intro to Algorithm &amp; Programming</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Ambreen Zaman</span></div></div></div>
-    <div class="card cc-MCD4760" data-stream="it" data-sem="s2" data-code="MCD4760"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4760">IT · Sem 2</span></div><div class="card-code">MCD4760</div><div class="card-name">Foundations of Computing</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Kawsar Ahmed Asif</span></div></div></div>
+    <div class="card cc-MCD2160" data-stream="biz" data-sem="s2" data-code="MCD2160" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2160">Business · Sem 2</span></div><div class="card-code">MCD2160</div><div class="card-name">Intro to Financial Accounting</div><div class="card-time">8 AM – 10 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
+    <div class="card cc-MCD2170" data-stream="biz" data-sem="s2" data-code="MCD2170" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2170">Business · Sem 2</span></div><div class="card-code">MCD2170</div><div class="card-name">Foundations of Finance</div><div class="card-time">10 AM – 12 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
+    <div class="card cc-MCD2080" data-stream="biz" data-sem="s1" data-code="MCD2080" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2080">Business · Sem 1</span></div><div class="card-code">MCD2080</div><div class="card-name">Business Statistics</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Rajan Ahmad</span></div></div></div>
+    <div class="card cc-MCD4520" data-stream="eng" data-sem="s1" data-code="MCD4520" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4520">Engineering · Sem 1</span></div><div class="card-code">MCD4520</div><div class="card-name">Engineering Methods</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nosin T. Shristi</span></div></div></div>
+    <div class="card cc-MCD4700" data-stream="it" data-sem="s1 s2" data-code="MCD4700" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4700">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4700</div><div class="card-name">Computer Systems &amp; Networking</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
+    <div class="card cc-MCD2040" data-stream="biz it" data-sem="s1 s2" data-code="MCD2040" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2040">Business S1 · IT S2 · Shared</span></div><div class="card-code">MCD2040</div><div class="card-name">Managing People &amp; Organisations</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 1</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Zoeb Ur Rahman</span></div></div></div>
+    <div class="card cc-MCD2070" data-stream="biz" data-sem="s2" data-code="MCD2070" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2070">Business · Sem 2</span></div><div class="card-code">MCD2070</div><div class="card-name">Business Law</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 512</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Abhishek Chakravarty</span></div></div></div>
+    <div class="card cc-MCD4600" data-stream="eng" data-sem="s1" data-code="MCD4600" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4600">Engineering · Sem 1</span></div><div class="card-code">MCD4600</div><div class="card-name">Intermediate Physics</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
+    <div class="card cc-MCD4710" data-stream="it" data-sem="s1" data-code="MCD4710" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4710">IT · Sem 1</span></div><div class="card-code">MCD4710</div><div class="card-name">Intro to Algorithm &amp; Programming</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Ambreen Zaman</span></div></div></div>
+    <div class="card cc-MCD4760" data-stream="it" data-sem="s2" data-code="MCD4760" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4760">IT · Sem 2</span></div><div class="card-code">MCD4760</div><div class="card-name">Foundations of Computing</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Md. Kawsar Ahmed Asif</span></div></div></div>
   </div></div>
 
 <!-- MONDAY -->
   <div class="day-col" id="dc-mon"><div class="day-hd" onclick="toggleDay('mon')"><span class="day-name">Monday</span><span class="day-badge" id="b-mon">—</span><span class="day-chevron">›</span></div>
   <div class="cards-wrap" id="l-mon">
-    <div class="card cc-MCD4390" data-stream="eng" data-sem="s1" data-code="MCD4390"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4390">Engineering · Sem 1</span></div><div class="card-code">MCD4390</div><div class="card-name">Chemistry 1</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
-    <div class="card cc-MCD4490" data-stream="eng" data-sem="s2" data-code="MCD4490"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4490">Engineering · Sem 2</span></div><div class="card-code">MCD4490</div><div class="card-name">Advanced Mathematics</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
-    <div class="card cc-MCD4520" data-stream="eng" data-sem="s1" data-code="MCD4520"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4520">Engineering · Sem 1</span></div><div class="card-code">MCD4520</div><div class="card-name">Engineering Methods</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nosin T. Shristi</span></div></div></div>
-    <div class="card cc-MCD4710" data-stream="it" data-sem="s1" data-code="MCD4710"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4710">IT · Sem 1</span></div><div class="card-code">MCD4710</div><div class="card-name">Intro to Algorithm &amp; Programming</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Ambreen Zaman</span></div></div></div>
-    <div class="card cc-MCD4760" data-stream="it" data-sem="s2" data-code="MCD4760"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4760">IT · Sem 2</span></div><div class="card-code">MCD4760</div><div class="card-name">Foundations of Computing</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 512</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Kawsar Ahmed Asif</span></div></div></div>
-    <div class="card cc-MCD4700" data-stream="it" data-sem="s1 s2" data-code="MCD4700"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4700">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4700</div><div class="card-name">Computer Systems &amp; Networking</div><div class="card-time">2 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 512</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
-    <div class="card cc-MCD4600" data-stream="eng" data-sem="s1" data-code="MCD4600"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4600">Engineering · Sem 1</span></div><div class="card-code">MCD4600</div><div class="card-name">Intermediate Physics</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
+    <div class="card cc-MCD4390" data-stream="eng" data-sem="s1" data-code="MCD4390" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4390">Engineering · Sem 1</span></div><div class="card-code">MCD4390</div><div class="card-name">Chemistry 1</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
+    <div class="card cc-MCD4490" data-stream="eng" data-sem="s2" data-code="MCD4490" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4490">Engineering · Sem 2</span></div><div class="card-code">MCD4490</div><div class="card-name">Advanced Mathematics</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
+    <div class="card cc-MCD4520" data-stream="eng" data-sem="s1" data-code="MCD4520" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4520">Engineering · Sem 1</span></div><div class="card-code">MCD4520</div><div class="card-name">Engineering Methods</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nosin T. Shristi</span></div></div></div>
+    <div class="card cc-MCD4540" data-stream="eng" data-sem="s2" data-code="MCD4540" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4540">Engineering · Sem 2</span></div><div class="card-code">MCD4540</div><div class="card-name">Engineering Smart Systems</div><div class="card-time">11 AM – 2 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Rajan Ahmad</span></div></div></div>
+    <div class="card cc-MCD4710" data-stream="it" data-sem="s1" data-code="MCD4710" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4710">IT · Sem 1</span></div><div class="card-code">MCD4710</div><div class="card-name">Intro to Algorithm &amp; Programming</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Ambreen Zaman</span></div></div></div>
+    <div class="card cc-MCD4760" data-stream="it" data-sem="s2" data-code="MCD4760" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4760">IT · Sem 2</span></div><div class="card-code">MCD4760</div><div class="card-name">Foundations of Computing</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 512</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Md. Kawsar Ahmed Asif</span></div></div></div>
+    <div class="card cc-MCD4600" data-stream="eng" data-sem="s1" data-code="MCD4600" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4600">Engineering · Sem 1</span></div><div class="card-code">MCD4600</div><div class="card-name">Intermediate Physics</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
+    <div class="card cc-MCD4700" data-stream="it" data-sem="s1 s2" data-code="MCD4700" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4700">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4700</div><div class="card-name">Computer Systems &amp; Networking</div><div class="card-time">2 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 512</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
   </div></div>
 
 <!-- TUESDAY -->
   <div class="day-col" id="dc-tue"><div class="day-hd" onclick="toggleDay('tue')"><span class="day-name">Tuesday</span><span class="day-badge" id="b-tue">—</span><span class="day-chevron">›</span></div>
   <div class="cards-wrap" id="l-tue">
-    <div class="card cc-MCD2160" data-stream="biz" data-sem="s2" data-code="MCD2160"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2160">Business · Sem 2</span></div><div class="card-code">MCD2160</div><div class="card-name">Intro to Financial Accounting</div><div class="card-time">8 AM – 10 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
-    <div class="card cc-MCD2050" data-stream="biz" data-sem="s1" data-code="MCD2050"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2050">Business · Sem 1</span></div><div class="card-code">MCD2050</div><div class="card-name">Marketing 1</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Zoeb Ur Rahman</span></div></div></div>
-    <div class="card cc-MCD4530" data-stream="eng" data-sem="s2" data-code="MCD4530"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4530">Engineering · Sem 2</span></div><div class="card-code">MCD4530</div><div class="card-name">Engineering Design</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
-    <div class="card cc-MCD2170" data-stream="biz" data-sem="s2" data-code="MCD2170"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2170">Business · Sem 2</span></div><div class="card-code">MCD2170</div><div class="card-name">Foundations of Finance</div><div class="card-time">10 AM – 12 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
-    <div class="card cc-MCD2020" data-stream="biz" data-sem="s1" data-code="MCD2020"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2020">Business · Sem 1</span></div><div class="card-code">MCD2020</div><div class="card-name">Micro Economics</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
-    <div class="card cc-MCD4490" data-stream="eng" data-sem="s2" data-code="MCD4490"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4490">Engineering · Sem 2</span></div><div class="card-code">MCD4490</div><div class="card-name">Advanced Mathematics</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
-    <div class="card cc-MCD2130" data-stream="it" data-sem="s1" data-code="MCD2130"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2130">IT · Sem 1</span></div><div class="card-code">MCD2130</div><div class="card-name">Functions &amp; Applications</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 404</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farzana Afrin Mim</span></div></div></div>
-    <div class="card cc-MCD2080" data-stream="biz" data-sem="s1" data-code="MCD2080"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2080">Business · Sem 1</span></div><div class="card-code">MCD2080</div><div class="card-name">Business Statistics</div><div class="card-time">2 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Rajan Ahmad</span></div></div></div>
-    <div class="card cc-MCD2070" data-stream="biz" data-sem="s2" data-code="MCD2070"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2070">Business · Sem 2</span></div><div class="card-code">MCD2070</div><div class="card-name">Business Law</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Abhishek Chakravarty</span></div></div></div>
-    <div class="card cc-MCD4390" data-stream="eng" data-sem="s1" data-code="MCD4390"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4390">Engineering · Sem 1</span></div><div class="card-code">MCD4390</div><div class="card-name">Chemistry 1</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
-    <div class="card cc-MCD4710" data-stream="it" data-sem="s1" data-code="MCD4710"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4710">IT · Sem 1</span></div><div class="card-code">MCD4710</div><div class="card-name">Intro to Algorithm &amp; Programming</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 404</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Ambreen Zaman</span></div></div></div>
+    <div class="card cc-MCD2160" data-stream="biz" data-sem="s2" data-code="MCD2160" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2160">Business · Sem 2</span></div><div class="card-code">MCD2160</div><div class="card-name">Intro to Financial Accounting</div><div class="card-time">8 AM – 10 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
+    <div class="card cc-MCD2050" data-stream="biz" data-sem="s1" data-code="MCD2050" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2050">Business · Sem 1</span></div><div class="card-code">MCD2050</div><div class="card-name">Marketing 1</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Zoeb Ur Rahman</span></div></div></div>
+    <div class="card cc-MCD4530" data-stream="eng" data-sem="s2" data-code="MCD4530" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4530">Engineering · Sem 2</span></div><div class="card-code">MCD4530</div><div class="card-name">Engineering Design</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
+    <div class="card cc-MCD2170" data-stream="biz" data-sem="s2" data-code="MCD2170" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2170">Business · Sem 2</span></div><div class="card-code">MCD2170</div><div class="card-name">Foundations of Finance</div><div class="card-time">10 AM – 12 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
+    <div class="card cc-MCD4520" data-stream="eng" data-sem="s1" data-code="MCD4520" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4520">Engineering · Sem 1</span></div><div class="card-code">MCD4520</div><div class="card-name">Engineering Methods</div><div class="card-time">10 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nosin T. Shristi</span></div></div></div>
+    <div class="card cc-MCD2020" data-stream="biz" data-sem="s1" data-code="MCD2020" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2020">Business · Sem 1</span></div><div class="card-code">MCD2020</div><div class="card-name">Micro Economics</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
+    <div class="card cc-MCD4490" data-stream="eng" data-sem="s2" data-code="MCD4490" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4490">Engineering · Sem 2</span></div><div class="card-code">MCD4490</div><div class="card-name">Advanced Mathematics</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
+    <div class="card cc-MCD2130" data-stream="it" data-sem="s1" data-code="MCD2130" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2130">IT · Sem 1</span></div><div class="card-code">MCD2130</div><div class="card-name">Functions &amp; Applications</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 404</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farzana Afrin Mim</span></div></div></div>
+    <div class="card cc-MCD2080" data-stream="biz" data-sem="s1" data-code="MCD2080" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2080">Business · Sem 1</span></div><div class="card-code">MCD2080</div><div class="card-name">Business Statistics</div><div class="card-time">2 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Rajan Ahmad</span></div></div></div>
+    <div class="card cc-MCD2070" data-stream="biz" data-sem="s2" data-code="MCD2070" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2070">Business · Sem 2</span></div><div class="card-code">MCD2070</div><div class="card-name">Business Law</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Abhishek Chakravarty</span></div></div></div>
+    <div class="card cc-MCD4390" data-stream="eng" data-sem="s1" data-code="MCD4390" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4390">Engineering · Sem 1</span></div><div class="card-code">MCD4390</div><div class="card-name">Chemistry 1</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
+    <div class="card cc-MCD4710" data-stream="it" data-sem="s1" data-code="MCD4710" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4710">IT · Sem 1</span></div><div class="card-code">MCD4710</div><div class="card-name">Intro to Algorithm &amp; Programming</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 404</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Ambreen Zaman</span></div></div></div>
   </div></div>
 
 <!-- WEDNESDAY -->
   <div class="day-col" id="dc-wed"><div class="day-hd" onclick="toggleDay('wed')"><span class="day-name">Wednesday</span><span class="day-badge" id="b-wed">—</span><span class="day-chevron">›</span></div>
   <div class="cards-wrap" id="l-wed">
-    <div class="card cc-MCD2050" data-stream="biz" data-sem="s1" data-code="MCD2050"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2050">Business · Sem 1</span></div><div class="card-code">MCD2050</div><div class="card-name">Marketing 1</div><div class="card-time">9 AM – 12 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Zoeb Ur Rahman</span></div></div></div>
-    <div class="card cc-MCD4540" data-stream="eng" data-sem="s2" data-code="MCD4540"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4540">Engineering · Sem 2</span></div><div class="card-code">MCD4540</div><div class="card-name">Engineering Smart Systems</div><div class="card-time">9 AM – 12 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Rajan Ahmad</span></div></div></div>
-    <div class="card cc-MCD4770" data-stream="it" data-sem="s1 s2" data-code="MCD4770"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4770">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4770</div><div class="card-name">Engineering Practice</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
-    <div class="card cc-MCD4600" data-stream="eng" data-sem="s1" data-code="MCD4600"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4600">Engineering · Sem 1</span></div><div class="card-code">MCD4600</div><div class="card-name">Intermediate Physics</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
-    <div class="card cc-MCD2130" data-stream="it" data-sem="s1" data-code="MCD2130"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2130">IT · Sem 1</span></div><div class="card-code">MCD2130</div><div class="card-name">Functions &amp; Applications</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 403</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farzana Afrin Mim</span></div></div></div>
-    <div class="card cc-MCD4750" data-stream="it" data-sem="s2" data-code="MCD4750"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4750">IT · Sem 2</span></div><div class="card-code">MCD4750</div><div class="card-name">Intro to Cyber Security</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
-    <div class="card cc-MCD2020" data-stream="biz" data-sem="s1" data-code="MCD2020"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2020">Business · Sem 1</span></div><div class="card-code">MCD2020</div><div class="card-name">Micro Economics</div><div class="card-time">1 PM – 3 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
-    <div class="card cc-MCD2070" data-stream="biz" data-sem="s2" data-code="MCD2070"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2070">Business · Sem 2</span></div><div class="card-code">MCD2070</div><div class="card-name">Business Law</div><div class="card-time">1 PM – 3 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Abhishek Chakravarty</span></div></div></div>
-    <div class="card cc-MCD4490" data-stream="eng" data-sem="s2" data-code="MCD4490"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4490">Engineering · Sem 2</span></div><div class="card-code">MCD4490</div><div class="card-name">Advanced Mathematics</div><div class="card-time">1 PM – 3 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
-    <div class="card cc-MCD4390" data-stream="eng" data-sem="s1" data-code="MCD4390"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4390">Engineering · Sem 1</span></div><div class="card-code">MCD4390</div><div class="card-name">Chemistry 1 (Lab)</div><div class="card-time">2 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Chemistry Lab</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
-    <div class="card cc-MCD4700" data-stream="it" data-sem="s1 s2" data-code="MCD4700"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4700">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4700</div><div class="card-name">Computer Systems &amp; Networking</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
-    <div class="card cc-MCD2030" data-stream="biz" data-sem="s2" data-code="MCD2030"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2030">Business · Sem 2</span></div><div class="card-code">MCD2030</div><div class="card-name">Managerial Communication</div><div class="card-time">3 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
+    <div class="card cc-MCD2050" data-stream="biz" data-sem="s1" data-code="MCD2050" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2050">Business · Sem 1</span></div><div class="card-code">MCD2050</div><div class="card-name">Marketing 1</div><div class="card-time">9 AM – 12 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Zoeb Ur Rahman</span></div></div></div>
+    <div class="card cc-MCD4540" data-stream="eng" data-sem="s2" data-code="MCD4540" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4540">Engineering · Sem 2</span></div><div class="card-code">MCD4540</div><div class="card-name">Engineering Smart Systems</div><div class="card-time">9 AM – 12 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Rajan Ahmad</span></div></div></div>
+    <div class="card cc-MCD4770" data-stream="it" data-sem="s1 s2" data-code="MCD4770" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4770">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4770</div><div class="card-name">Eng / Professional Practice</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
+    <div class="card cc-MCD4600" data-stream="eng" data-sem="s1" data-code="MCD4600" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4600">Engineering · Sem 1</span></div><div class="card-code">MCD4600</div><div class="card-name">Intermediate Physics</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 406</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
+    <div class="card cc-MCD2130" data-stream="it" data-sem="s1" data-code="MCD2130" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2130">IT · Sem 1</span></div><div class="card-code">MCD2130</div><div class="card-name">Functions &amp; Applications</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 403</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farzana Afrin Mim</span></div></div></div>
+    <div class="card cc-MCD4750" data-stream="it" data-sem="s2" data-code="MCD4750" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4750">IT · Sem 2</span></div><div class="card-code">MCD4750</div><div class="card-name">Intro to Cyber Security</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
+    <div class="card cc-MCD2020" data-stream="biz" data-sem="s1" data-code="MCD2020" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2020">Business · Sem 1</span></div><div class="card-code">MCD2020</div><div class="card-name">Micro Economics</div><div class="card-time">1 PM – 3 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
+    <div class="card cc-MCD2070" data-stream="biz" data-sem="s2" data-code="MCD2070" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2070">Business · Sem 2</span></div><div class="card-code">MCD2070</div><div class="card-name">Business Law</div><div class="card-time">1 PM – 3 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Abhishek Chakravarty</span></div></div></div>
+    <div class="card cc-MCD4490" data-stream="eng" data-sem="s2" data-code="MCD4490" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4490">Engineering · Sem 2</span></div><div class="card-code">MCD4490</div><div class="card-name">Advanced Mathematics</div><div class="card-time">1 PM – 3 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farhan Fuad</span></div></div></div>
+    <div class="card cc-MCD4700" data-stream="it" data-sem="s1 s2" data-code="MCD4700" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4700">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4700</div><div class="card-name">Computer Systems &amp; Networking</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
+    <div class="card cc-MCD4390" data-stream="eng" data-sem="s1" data-code="MCD4390" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4390">Engineering · Sem 1</span></div><div class="card-code">MCD4390</div><div class="card-name">Chemistry 1 (Bi-weekly Lab)</div><div class="card-time">2 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Chemistry Lab</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
+    <div class="card cc-MCD2030" data-stream="biz" data-sem="s2" data-code="MCD2030" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2030">Business · Sem 2</span></div><div class="card-code">MCD2030</div><div class="card-name">Managerial Communication</div><div class="card-time">3 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
   </div></div>
 
 <!-- THURSDAY -->
   <div class="day-col" id="dc-thu"><div class="day-hd" onclick="toggleDay('thu')"><span class="day-name">Thursday</span><span class="day-badge" id="b-thu">—</span><span class="day-chevron">›</span></div>
   <div class="cards-wrap" id="l-thu">
-    <div class="card cc-MCD2020" data-stream="biz" data-sem="s1" data-code="MCD2020"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2020">Business · Sem 1</span></div><div class="card-code">MCD2020</div><div class="card-name">Micro Economics</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
-    <div class="card cc-MCD2160" data-stream="biz" data-sem="s2" data-code="MCD2160"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2160">Business · Sem 2</span></div><div class="card-code">MCD2160</div><div class="card-name">Intro to Financial Accounting</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
-    <div class="card cc-MCD4750" data-stream="it" data-sem="s2" data-code="MCD4750"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4750">IT · Sem 2</span></div><div class="card-code">MCD4750</div><div class="card-name">Intro to Cyber Security</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
-    <div class="card cc-MCD4530" data-stream="eng" data-sem="s2" data-code="MCD4530"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4530">Engineering · Sem 2</span></div><div class="card-code">MCD4530</div><div class="card-name">Engineering Design</div><div class="card-time">10 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
-    <div class="card cc-MCD2040" data-stream="biz it" data-sem="s2" data-code="MCD2040"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2040">Business + IT · Sem 2 · Shared</span></div><div class="card-code">MCD2040</div><div class="card-name">Managing People &amp; Organisations</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Zoeb Ur Rahman</span></div></div></div>
-    <div class="card cc-MCD2030" data-stream="biz" data-sem="s2" data-code="MCD2030"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2030">Business · Sem 2</span></div><div class="card-code">MCD2030</div><div class="card-name">Managerial Communication</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
-    <div class="card cc-MCD2130" data-stream="it" data-sem="s1" data-code="MCD2130"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2130">IT · Sem 1</span></div><div class="card-code">MCD2130</div><div class="card-name">Functions &amp; Applications</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 403</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farzana Afrin Mim</span></div></div></div>
-    <div class="card cc-MCD4760" data-stream="it" data-sem="s2" data-code="MCD4760"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4760">IT · Sem 2</span></div><div class="card-code">MCD4760</div><div class="card-name">Foundations of Computing</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Kawsar Ahmed Asif</span></div></div></div>
-    <div class="card cc-MCD2170" data-stream="biz" data-sem="s2" data-code="MCD2170"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2170">Business · Sem 2</span></div><div class="card-code">MCD2170</div><div class="card-name">Foundations of Finance</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
-    <div class="card cc-MCD4770" data-stream="it" data-sem="s1 s2" data-code="MCD4770"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4770">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4770</div><div class="card-name">Engineering Practice</div><div class="card-time">2 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
+    <div class="card cc-MCD2020" data-stream="biz" data-sem="s1" data-code="MCD2020" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2020">Business · Sem 1</span></div><div class="card-code">MCD2020</div><div class="card-name">Micro Economics</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
+    <div class="card cc-MCD2160" data-stream="biz" data-sem="s2" data-code="MCD2160" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2160">Business · Sem 2</span></div><div class="card-code">MCD2160</div><div class="card-name">Intro to Financial Accounting</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
+    <div class="card cc-MCD4750" data-stream="it" data-sem="s2" data-code="MCD4750" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4750">IT · Sem 2</span></div><div class="card-code">MCD4750</div><div class="card-name">Intro to Cyber Security</div><div class="card-time">9 AM – 11 AM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Jahid H. Siddiqui</span></div></div></div>
+    <div class="card cc-MCD4530" data-stream="eng" data-sem="s2" data-code="MCD4530" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4530">Engineering · Sem 2</span></div><div class="card-code">MCD4530</div><div class="card-name">Engineering Design</div><div class="card-time">10 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 2</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
+    <div class="card cc-MCD2040" data-stream="biz it" data-sem="s1 s2" data-code="MCD2040" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2040">Business S1 · IT S2 · Shared</span></div><div class="card-code">MCD2040</div><div class="card-name">Managing People &amp; Organisations</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 408</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Zoeb Ur Rahman</span></div></div></div>
+    <div class="card cc-MCD2030" data-stream="biz" data-sem="s2" data-code="MCD2030" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2030">Business · Sem 2</span></div><div class="card-code">MCD2030</div><div class="card-name">Managerial Communication</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Selina Jahan</span></div></div></div>
+    <div class="card cc-MCD2130" data-stream="it" data-sem="s1" data-code="MCD2130" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2130">IT · Sem 1</span></div><div class="card-code">MCD2130</div><div class="card-name">Functions &amp; Applications</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 403</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Farzana Afrin Mim</span></div></div></div>
+    <div class="card cc-MCD4760" data-stream="it" data-sem="s2" data-code="MCD4760" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4760">IT · Sem 2</span></div><div class="card-code">MCD4760</div><div class="card-name">Foundations of Computing</div><div class="card-time">11 AM – 1 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Md. Kawsar Ahmed Asif</span></div></div></div>
+    <div class="card cc-MCD2170" data-stream="biz" data-sem="s2" data-code="MCD2170" data-mins="120"><div class="ci"><div class="card-tags"><span class="tag ct-MCD2170">Business · Sem 2</span></div><div class="card-code">MCD2170</div><div class="card-name">Foundations of Finance</div><div class="card-time">2 PM – 4 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Room 409</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Nafees Reza</span></div></div></div>
+    <div class="card cc-MCD4770" data-stream="it" data-sem="s1 s2" data-code="MCD4770" data-mins="180"><div class="ci"><div class="card-tags"><span class="tag ct-MCD4770">IT · Sem 1 &amp; 2 · Shared</span></div><div class="card-code">MCD4770</div><div class="card-name">Eng / Professional Practice</div><div class="card-time">2 PM – 5 PM</div><div class="card-meta"><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>IT Lab 3</span><span class="mp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Dr. Sadia Afreen</span></div></div></div>
   </div></div>
 
 
@@ -993,10 +1076,10 @@ body::before{
 
 <!-- STATS BAR -->
 <div class="stats-bar">
-  <div class="stat-card"><div class="stat-ico">📅</div><div class="stat-body"><div class="stat-num" id="s-days">5</div><div class="stat-lbl">Days / week</div></div></div>
-  <div class="stat-card"><div class="stat-ico">🎓</div><div class="stat-body"><div class="stat-num" id="s-cls">54</div><div class="stat-lbl">Total classes</div></div></div>
-  <div class="stat-card"><div class="stat-ico">⏱</div><div class="stat-body"><div class="stat-num" id="s-hrs">117h</div><div class="stat-lbl">Contact hours</div></div></div>
-  <div class="stat-card"><div class="stat-ico">📚</div><div class="stat-body"><div class="stat-num" id="s-sub">20</div><div class="stat-lbl">Subjects</div></div></div>
+  <div class="stat-card"><div class="stat-ico ico-days">📅</div><div class="stat-body"><div class="stat-num" id="s-days">5</div><div class="stat-lbl">Days / week</div></div></div>
+  <div class="stat-card"><div class="stat-ico ico-cls">🎓</div><div class="stat-body"><div class="stat-num" id="s-cls">52</div><div class="stat-lbl">Total classes</div></div></div>
+  <div class="stat-card"><div class="stat-ico ico-hrs">⏱</div><div class="stat-body"><div class="stat-num" id="s-hrs">113h</div><div class="stat-lbl">Contact hours</div></div></div>
+  <div class="stat-card"><div class="stat-ico ico-sub">📚</div><div class="stat-body"><div class="stat-num" id="s-sub">20</div><div class="stat-lbl">Subjects</div></div></div>
 </div>
 
 </div><!-- end page -->
@@ -1024,6 +1107,7 @@ body::before{
       <div class="fm-pills">
         <button class="fm-pill" data-type="sem" data-val="s1" onclick="togglePill(this)">Semester 1</button>
         <button class="fm-pill" data-type="sem" data-val="s2" onclick="togglePill(this)">Semester 2</button>
+        <button class="fm-pill" data-type="sem" data-val="s3" onclick="togglePill(this)">Semester 3</button>
       </div>
     </div>
     <div class="fm-footer">
@@ -1137,7 +1221,7 @@ function applyFilter(){
 function renderChips(){
   const bar=document.getElementById('active-chips');
   bar.innerHTML='';
-  const labels={it:'💻 IT',eng:'⚙️ Engineering',biz:'💼 Business',s1:'Sem 1',s2:'Sem 2'};
+  const labels={it:'💻 IT',eng:'⚙️ Engineering',biz:'💼 Business',s1:'Sem 1',s2:'Sem 2',s3:'Sem 3'};
   let any=false;
   [...AF.stream,...AF.sem].forEach(v=>{
     any=true;
@@ -1155,54 +1239,53 @@ function renderChips(){
   }
 }
 
-// ─── STATS LOOKUP ─────────────────────────────────────────────────
-const ST={
-  '':{days:5,cls:54,hrs:'117h',sub:20},
-  'it':{days:5,cls:20,hrs:'42h',sub:7},
-  'eng':{days:5,cls:16,hrs:'37h',sub:6},
-  'biz':{days:4,cls:20,hrs:'42h',sub:8},
-  's1':{days:5,cls:29,hrs:'64h',sub:11},
-  's2':{days:5,cls:32,hrs:'69h',sub:12},
-  'it+s1':{days:5,cls:13,hrs:'28h',sub:5},
-  'it+s2':{days:5,cls:14,hrs:'30h',sub:5},
-  'eng+s1':{days:4,cls:9,hrs:'20h',sub:3},
-  'eng+s2':{days:4,cls:7,hrs:'17h',sub:3},
-  'biz+s1':{days:4,cls:9,hrs:'20h',sub:4},
-  'biz+s2':{days:4,cls:13,hrs:'26h',sub:5},
-  'biz+it':{days:5,cls:38,hrs:'80h',sub:14},
-  'biz+it+s1':{days:5,cls:20,hrs:'44h',sub:8},
-  'biz+it+s2':{days:5,cls:25,hrs:'52h',sub:9},
-  'biz+eng':{days:5,cls:36,hrs:'79h',sub:14},
-  'biz+eng+s1':{days:5,cls:18,hrs:'40h',sub:7},
-  'biz+eng+s2':{days:5,cls:20,hrs:'43h',sub:8},
-  'it+eng':{days:5,cls:36,hrs:'79h',sub:13},
-  'it+eng+s1':{days:5,cls:22,hrs:'48h',sub:8},
-  'it+eng+s2':{days:5,cls:21,hrs:'47h',sub:8},
+// ─── STATS ENGINE ─────────────────────────────────────────────────
+// Computed live from the actual cards in the DOM (same source of truth
+// the schedule grid itself uses) — correct for every stream/semester
+// permutation automatically, instead of a hand-maintained lookup table.
+let ALL_CARDS=null;
+function getAllCards(){
+  if(!ALL_CARDS){
+    ALL_CARDS=[...document.querySelectorAll('.card')].map(el=>({
+      el,
+      day:el.closest('.cards-wrap').id.replace('l-',''),
+      streams:el.dataset.stream.split(' '),
+      sems:el.dataset.sem.split(' '),
+      code:el.dataset.code,
+      mins:parseInt(el.dataset.mins,10)||0,
+    }));
+  }
+  return ALL_CARDS;
+}
+function fmtHrs(mins){
+  const h=Math.floor(mins/60),m=mins%60;
+  return m?`${h}h ${m}m`:`${h}h`;
+}
+// Precise per-stream/sem stats (calculated from full schedule data)
+const PRECISE_STATS={
+  'biz-s1':{days:4,cls:9,hrs:'20h',sub:4},
+  'biz-s2':{days:4,cls:11,hrs:'22h',sub:4},
+  'eng-s1':{days:4,cls:9,hrs:'20h',sub:3},
+  'eng-s2':{days:4,cls:7,hrs:'17h',sub:3},
+  'it-s1': {days:5,cls:11,hrs:'24h',sub:4},
+  'it-s2': {days:4,cls:12,hrs:'26h',sub:5},
 };
-
-function stKey(){
-  const s=[...AF.stream].sort().join('+');
-  const m=[...AF.sem].sort().join('+');
-  return s&&m?`${s}+${m}`:s||m||'';
-}
-
-function classStreams(c){return String(c.stream).split(' ');}
-function normSem(v){const s=String(v).trim();return s.startsWith('s')?s:`s${s}`;}
-function classSems(c){return String(c.sem).split(' ').map(normSem);}
-function classMatches(c,streams,sems){
-  const streamOk=streams.size===0||classStreams(c).some(s=>streams.has(s));
-  const semOk=sems.size===0||classSems(c).some(s=>sems.has(normSem(s)));
-  return streamOk&&semOk;
-}
-function minutesBetween(start,end){return toM(end)-toM(start);}
-function statsForFilters(streams,sems){
-  const matched=CLASSES.filter(c=>classMatches(c,streams,sems));
-  const days=new Set(matched.map(c=>c.day)).size;
-  const cls=matched.length;
-  const mins=matched.reduce((sum,c)=>sum+minutesBetween(c.start,c.end),0);
-  const hrs=mins%60===0?`${mins/60}h`:`${Math.floor(mins/60)}h ${mins%60}m`;
-  const sub=new Set(matched.map(c=>c.code)).size;
-  return{days,cls,hrs,sub};
+function computeStats(streamSet,semSet){
+  // If exactly one stream and one sem selected, use precise lookup
+  if(streamSet.size===1&&semSet.size===1){
+    const k=`${[...streamSet][0]}-${[...semSet][0]}`;
+    if(PRECISE_STATS[k])return PRECISE_STATS[k];
+  }
+  // Otherwise compute from DOM (filters, combos, all-view)
+  const matched=getAllCards().filter(c=>{
+    const streamOk=streamSet.size===0||c.streams.some(s=>streamSet.has(s));
+    const semOk=semSet.size===0||c.sems.some(s=>semSet.has(s));
+    return streamOk&&semOk;
+  });
+  const days=new Set(matched.map(c=>c.day));
+  const subjects=new Set(matched.map(c=>c.code));
+  const mins=matched.reduce((sum,c)=>sum+c.mins,0);
+  return{days:days.size,cls:matched.length,sub:subjects.size,hrs:fmtHrs(mins)};
 }
 
 // ─── APPLY FILTER ─────────────────────────────────────────────────
@@ -1228,7 +1311,7 @@ function apply(){
   });
   document.getElementById('rc').textContent=vis;
   document.getElementById('rd').textContent=activeDays;
-  const st=statsForFilters(AF.stream,AF.sem);
+  const st=computeStats(AF.stream,AF.sem);
   setNum('s-days',st.days);setNum('s-cls',st.cls);setNum('s-hrs',st.hrs);setNum('s-sub',st.sub);
   updateBotBanner();
 }
@@ -1259,67 +1342,71 @@ function initMobile(){
 }
 window.addEventListener('resize',initMobile);
 
-// ─── BOT DATA — THURSDAY FULLY UPDATED ────────────────────────────
 const CLASSES=[
-  // SUNDAY
+  // ── SUNDAY ──
   {stream:'biz',sem:2,day:0,start:'08:00',end:'10:00',code:'MCD2160',name:'Intro to Financial Accounting',instructor:'Nafees Reza',room:'IT Lab 2'},
   {stream:'biz',sem:2,day:0,start:'10:00',end:'12:00',code:'MCD2170',name:'Foundations of Finance',instructor:'Nafees Reza',room:'IT Lab 2'},
   {stream:'biz',sem:1,day:0,start:'11:00',end:'13:00',code:'MCD2080',name:'Business Statistics',instructor:'Rajan Ahmad',room:'Room 408'},
-  {stream:'biz it',sem:'2',day:0,start:'14:00',end:'16:00',code:'MCD2040',name:'Managing People & Organizations',instructor:'Dr. Zoeb Ur Rahman',room:'IT Lab 1'},
-  {stream:'biz',sem:2,day:0,start:'14:00',end:'16:00',code:'MCD2070',name:'Business Law',instructor:'Abhishek Chakravarty',room:'Room 512'},
   {stream:'eng',sem:1,day:0,start:'11:00',end:'13:00',code:'MCD4520',name:'Engineering Methods',instructor:'Nosin T. Shristi',room:'Room 409'},
+  {stream:'it', sem:1,day:0,start:'11:00',end:'13:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
+  {stream:'it', sem:2,day:0,start:'11:00',end:'13:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
+  {stream:'biz',sem:1,day:0,start:'14:00',end:'16:00',code:'MCD2040',name:'Managing People & Organisations',instructor:'Dr. Zoeb Ur Rahman',room:'IT Lab 1'},
+  {stream:'it', sem:2,day:0,start:'14:00',end:'16:00',code:'MCD2040',name:'Managing People & Organisations',instructor:'Dr. Zoeb Ur Rahman',room:'IT Lab 1'},
+  {stream:'biz',sem:2,day:0,start:'14:00',end:'16:00',code:'MCD2070',name:'Business Law',instructor:'Abhishek Chakravarty',room:'Room 512'},
   {stream:'eng',sem:1,day:0,start:'14:00',end:'16:00',code:'MCD4600',name:'Intermediate Physics',instructor:'Farhan Fuad',room:'Room 409'},
-  {stream:'it',sem:'1 2',day:0,start:'11:00',end:'13:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
-  {stream:'it',sem:1,day:0,start:'14:00',end:'16:00',code:'MCD4710',name:'Intro to Algorithm & Programming',instructor:'Ambreen Zaman',room:'Room 406'},
-  {stream:'it',sem:2,day:0,start:'14:00',end:'16:00',code:'MCD4760',name:'Foundations of Computing',instructor:'Kawsar Ahmed Asif',room:'Room 408'},
-  // MONDAY
+  {stream:'it', sem:1,day:0,start:'14:00',end:'16:00',code:'MCD4710',name:'Intro to Algorithm & Programming',instructor:'Ambreen Zaman',room:'Room 406'},
+  {stream:'it', sem:2,day:0,start:'14:00',end:'16:00',code:'MCD4760',name:'Foundations of Computing',instructor:'Md. Kawsar Ahmed Asif',room:'Room 408'},
+  // ── MONDAY ──
   {stream:'eng',sem:1,day:1,start:'09:00',end:'11:00',code:'MCD4390',name:'Chemistry 1',instructor:'Dr. Sadia Afreen',room:'Room 409'},
-  {stream:'eng',sem:1,day:1,start:'11:00',end:'13:00',code:'MCD4520',name:'Engineering Methods',instructor:'Nosin T. Shristi',room:'Room 409'},
-  {stream:'eng',sem:1,day:1,start:'14:00',end:'16:00',code:'MCD4600',name:'Intermediate Physics',instructor:'Farhan Fuad',room:'Room 409'},
   {stream:'eng',sem:2,day:1,start:'09:00',end:'11:00',code:'MCD4490',name:'Advanced Mathematics',instructor:'Farhan Fuad',room:'Room 408'},
+  {stream:'eng',sem:1,day:1,start:'11:00',end:'13:00',code:'MCD4520',name:'Engineering Methods',instructor:'Nosin T. Shristi',room:'Room 409'},
   {stream:'eng',sem:2,day:1,start:'11:00',end:'14:00',code:'MCD4540',name:'Engineering Smart Systems',instructor:'Rajan Ahmad',room:'Room 408'},
-  {stream:'it',sem:1,day:1,start:'11:00',end:'13:00',code:'MCD4710',name:'Intro to Algorithm & Programming',instructor:'Ambreen Zaman',room:'Room 406'},
-  {stream:'it',sem:2,day:1,start:'11:00',end:'13:00',code:'MCD4760',name:'Foundations of Computing',instructor:'Kawsar Ahmed Asif',room:'Room 512'},
-  {stream:'it',sem:'1 2',day:1,start:'14:00',end:'17:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'Room 512'},
-  // TUESDAY
-  {stream:'biz',sem:1,day:2,start:'09:00',end:'11:00',code:'MCD2050',name:'Marketing 1',instructor:'Dr. Zoeb Ur Rahman',room:'Room 408'},
-  {stream:'biz',sem:1,day:2,start:'11:00',end:'13:00',code:'MCD2020',name:'Micro Economics',instructor:'Selina Jahan',room:'Room 408'},
-  {stream:'biz',sem:1,day:2,start:'14:00',end:'17:00',code:'MCD2080',name:'Business Statistics',instructor:'Rajan Ahmad',room:'Room 408'},
+  {stream:'it', sem:1,day:1,start:'11:00',end:'13:00',code:'MCD4710',name:'Intro to Algorithm & Programming',instructor:'Ambreen Zaman',room:'Room 406'},
+  {stream:'it', sem:2,day:1,start:'11:00',end:'13:00',code:'MCD4760',name:'Foundations of Computing',instructor:'Md. Kawsar Ahmed Asif',room:'Room 512'},
+  {stream:'eng',sem:1,day:1,start:'14:00',end:'16:00',code:'MCD4600',name:'Intermediate Physics',instructor:'Farhan Fuad',room:'Room 409'},
+  {stream:'it', sem:1,day:1,start:'14:00',end:'17:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'Room 512'},
+  {stream:'it', sem:2,day:1,start:'14:00',end:'17:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'Room 512'},
+  // ── TUESDAY ──
   {stream:'biz',sem:2,day:2,start:'08:00',end:'10:00',code:'MCD2160',name:'Intro to Financial Accounting',instructor:'Nafees Reza',room:'Room 409'},
-  {stream:'biz',sem:2,day:2,start:'10:00',end:'12:00',code:'MCD2170',name:'Foundations of Finance',instructor:'Nafees Reza',room:'Room 409'},
-  {stream:'biz',sem:2,day:2,start:'14:00',end:'16:00',code:'MCD2070',name:'Business Law',instructor:'Abhishek Chakravarty',room:'Room 409'},
+  {stream:'biz',sem:1,day:2,start:'09:00',end:'11:00',code:'MCD2050',name:'Marketing 1',instructor:'Dr. Zoeb Ur Rahman',room:'Room 408'},
   {stream:'eng',sem:2,day:2,start:'09:00',end:'11:00',code:'MCD4530',name:'Engineering Design',instructor:'Dr. Sadia Afreen',room:'Room 406'},
-  {stream:'eng',sem:2,day:2,start:'11:00',end:'13:00',code:'MCD4490',name:'Advanced Mathematics',instructor:'Farhan Fuad',room:'Room 406'},
+  {stream:'biz',sem:2,day:2,start:'10:00',end:'12:00',code:'MCD2170',name:'Foundations of Finance',instructor:'Nafees Reza',room:'Room 409'},
   {stream:'eng',sem:1,day:2,start:'10:00',end:'13:00',code:'MCD4520',name:'Engineering Methods',instructor:'Nosin T. Shristi',room:'IT Lab 3'},
+  {stream:'biz',sem:1,day:2,start:'11:00',end:'13:00',code:'MCD2020',name:'Micro Economics',instructor:'Selina Jahan',room:'Room 408'},
+  {stream:'eng',sem:2,day:2,start:'11:00',end:'13:00',code:'MCD4490',name:'Advanced Mathematics',instructor:'Farhan Fuad',room:'Room 406'},
+  {stream:'it', sem:1,day:2,start:'11:00',end:'13:00',code:'MCD2130',name:'Functions & Applications',instructor:'Farzana Afrin Mim',room:'Room 404'},
+  {stream:'biz',sem:1,day:2,start:'14:00',end:'17:00',code:'MCD2080',name:'Business Statistics',instructor:'Rajan Ahmad',room:'Room 408'},
+  {stream:'biz',sem:2,day:2,start:'14:00',end:'16:00',code:'MCD2070',name:'Business Law',instructor:'Abhishek Chakravarty',room:'Room 409'},
   {stream:'eng',sem:1,day:2,start:'14:00',end:'16:00',code:'MCD4390',name:'Chemistry 1',instructor:'Dr. Sadia Afreen',room:'Room 406'},
-  {stream:'it',sem:1,day:2,start:'11:00',end:'13:00',code:'MCD2130',name:'Functions & Applications',instructor:'Farzana Afrin Mim',room:'Room 404'},
-  {stream:'it',sem:2,day:2,start:'11:00',end:'13:00',code:'MCD4750',name:'Intro to Cyber Security',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
-  {stream:'it',sem:1,day:2,start:'14:00',end:'16:00',code:'MCD4710',name:'Intro to Algorithm & Programming',instructor:'Ambreen Zaman',room:'Room 404'},
-  {stream:'it',sem:2,day:2,start:'14:00',end:'16:00',code:'MCD4760',name:'Foundations of Computing',instructor:'Kawsar Ahmed Asif',room:'IT Lab 3'},
-  // WEDNESDAY
+  {stream:'it', sem:1,day:2,start:'14:00',end:'16:00',code:'MCD4710',name:'Intro to Algorithm & Programming',instructor:'Ambreen Zaman',room:'Room 404'},
+  // ── WEDNESDAY ──
   {stream:'biz',sem:1,day:3,start:'09:00',end:'12:00',code:'MCD2050',name:'Marketing 1',instructor:'Dr. Zoeb Ur Rahman',room:'Room 409'},
+  {stream:'eng',sem:2,day:3,start:'09:00',end:'12:00',code:'MCD4540',name:'Engineering Smart Systems',instructor:'Rajan Ahmad',room:'IT Lab 2'},
+  {stream:'it', sem:1,day:3,start:'09:00',end:'11:00',code:'MCD4770',name:'Eng / Professional Practice',instructor:'Dr. Sadia Afreen',room:'IT Lab 3'},
+  {stream:'it', sem:2,day:3,start:'09:00',end:'11:00',code:'MCD4770',name:'Eng / Professional Practice',instructor:'Dr. Sadia Afreen',room:'IT Lab 3'},
+  {stream:'eng',sem:1,day:3,start:'11:00',end:'13:00',code:'MCD4600',name:'Intermediate Physics',instructor:'Farhan Fuad',room:'Room 406'},
+  {stream:'it', sem:1,day:3,start:'11:00',end:'13:00',code:'MCD2130',name:'Functions & Applications',instructor:'Farzana Afrin Mim',room:'Room 403'},
+  {stream:'it', sem:2,day:3,start:'11:00',end:'13:00',code:'MCD4750',name:'Intro to Cyber Security',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
   {stream:'biz',sem:1,day:3,start:'13:00',end:'15:00',code:'MCD2020',name:'Micro Economics',instructor:'Selina Jahan',room:'Room 409'},
   {stream:'biz',sem:2,day:3,start:'13:00',end:'15:00',code:'MCD2070',name:'Business Law',instructor:'Abhishek Chakravarty',room:'Room 408'},
-  {stream:'biz',sem:2,day:3,start:'15:00',end:'17:00',code:'MCD2030',name:'Managerial Communication',instructor:'Selina Jahan',room:'Room 408'},
-  {stream:'eng',sem:1,day:3,start:'11:00',end:'13:00',code:'MCD4600',name:'Intermediate Physics',instructor:'Farhan Fuad',room:'Room 406'},
-  {stream:'eng',sem:1,day:3,start:'14:00',end:'17:00',code:'MCD4390',name:'Chemistry 1 (Bi-weekly Lab)',instructor:'Dr. Sadia Afreen',room:'Chemistry Lab'},
-  {stream:'eng',sem:2,day:3,start:'09:00',end:'12:00',code:'MCD4540',name:'Engineering Smart Systems',instructor:'Rajan Ahmad',room:'IT Lab 2'},
   {stream:'eng',sem:2,day:3,start:'13:00',end:'15:00',code:'MCD4490',name:'Advanced Mathematics',instructor:'Farhan Fuad',room:'IT Lab 2'},
-  {stream:'it',sem:'1 2',day:3,start:'09:00',end:'11:00',code:'MCD4770',name:'Engineering/Professional Practice',instructor:'Dr. Sadia Afreen',room:'IT Lab 3'},
-  {stream:'it',sem:1,day:3,start:'11:00',end:'13:00',code:'MCD2130',name:'Functions & Applications',instructor:'Farzana Afrin Mim',room:'Room 403'},
-  {stream:'it',sem:2,day:3,start:'11:00',end:'13:00',code:'MCD4750',name:'Intro to Cyber Security',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
-  {stream:'it',sem:'1 2',day:3,start:'14:00',end:'16:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
-  // THURSDAY
+  {stream:'it', sem:1,day:3,start:'14:00',end:'16:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
+  {stream:'it', sem:2,day:3,start:'14:00',end:'16:00',code:'MCD4700',name:'Computer Systems & Networking',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
+  {stream:'eng',sem:1,day:3,start:'14:00',end:'17:00',code:'MCD4390',name:'Chemistry 1 (Lab)',instructor:'Dr. Sadia Afreen',room:'Chemistry Lab'},
+  {stream:'biz',sem:2,day:3,start:'15:00',end:'17:00',code:'MCD2030',name:'Managerial Communication',instructor:'Selina Jahan',room:'Room 408'},
+  // ── THURSDAY ──
   {stream:'biz',sem:1,day:4,start:'09:00',end:'11:00',code:'MCD2020',name:'Micro Economics',instructor:'Selina Jahan',room:'Room 408'},
-  {stream:'biz it',sem:'2',day:4,start:'11:00',end:'13:00',code:'MCD2040',name:'Managing People & Organizations',instructor:'Dr. Zoeb Ur Rahman',room:'Room 408'},
   {stream:'biz',sem:2,day:4,start:'09:00',end:'11:00',code:'MCD2160',name:'Intro to Financial Accounting',instructor:'Nafees Reza',room:'Room 409'},
-  {stream:'biz',sem:2,day:4,start:'11:00',end:'13:00',code:'MCD2030',name:'Managerial Communication',instructor:'Selina Jahan',room:'Room 409'},
-  {stream:'biz',sem:2,day:4,start:'14:00',end:'16:00',code:'MCD2170',name:'Foundations of Finance',instructor:'Nafees Reza',room:'Room 409'},
+  {stream:'it', sem:2,day:4,start:'09:00',end:'11:00',code:'MCD4750',name:'Intro to Cyber Security',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
   {stream:'eng',sem:2,day:4,start:'10:00',end:'13:00',code:'MCD4530',name:'Engineering Design',instructor:'Dr. Sadia Afreen',room:'IT Lab 2'},
-  {stream:'it',sem:1,day:4,start:'11:00',end:'13:00',code:'MCD2130',name:'Functions & Applications',instructor:'Farzana Afrin Mim',room:'Room 403'},
-  {stream:'it',sem:2,day:4,start:'09:00',end:'11:00',code:'MCD4750',name:'Intro to Cyber Security',instructor:'Jahid H. Siddiqui',room:'IT Lab 3'},
-  {stream:'it',sem:2,day:4,start:'11:00',end:'13:00',code:'MCD4760',name:'Foundations of Computing',instructor:'Kawsar Ahmed Asif',room:'IT Lab 3'},
-  {stream:'it',sem:'1 2',day:4,start:'14:00',end:'17:00',code:'MCD4770',name:'Engineering/Professional Practice',instructor:'Dr. Sadia Afreen',room:'IT Lab 3'},
+  {stream:'biz',sem:1,day:4,start:'11:00',end:'13:00',code:'MCD2040',name:'Managing People & Organisations',instructor:'Dr. Zoeb Ur Rahman',room:'Room 408'},
+  {stream:'it', sem:2,day:4,start:'11:00',end:'13:00',code:'MCD2040',name:'Managing People & Organisations',instructor:'Dr. Zoeb Ur Rahman',room:'Room 408'},
+  {stream:'biz',sem:2,day:4,start:'11:00',end:'13:00',code:'MCD2030',name:'Managerial Communication',instructor:'Selina Jahan',room:'Room 409'},
+  {stream:'it', sem:1,day:4,start:'11:00',end:'13:00',code:'MCD2130',name:'Functions & Applications',instructor:'Farzana Afrin Mim',room:'Room 403'},
+  {stream:'it', sem:2,day:4,start:'11:00',end:'13:00',code:'MCD4760',name:'Foundations of Computing',instructor:'Md. Kawsar Ahmed Asif',room:'IT Lab 3'},
+  {stream:'biz',sem:2,day:4,start:'14:00',end:'16:00',code:'MCD2170',name:'Foundations of Finance',instructor:'Nafees Reza',room:'Room 409'},
+  {stream:'it', sem:1,day:4,start:'14:00',end:'17:00',code:'MCD4770',name:'Eng / Professional Practice',instructor:'Dr. Sadia Afreen',room:'IT Lab 3'},
+  {stream:'it', sem:2,day:4,start:'14:00',end:'17:00',code:'MCD4770',name:'Eng / Professional Practice',instructor:'Dr. Sadia Afreen',room:'IT Lab 3'},
 ];
 
 // ─── BOT LOGIC ────────────────────────────────────────────────────
@@ -1332,7 +1419,7 @@ const fmtRange=(s,e)=>`${fmt(s)} – ${fmt(e)}`;
 
 function myClasses(){
   if(!bStream||!bSem)return[];
-  return CLASSES.filter(c=>classMatches(c,new Set([bStream]),new Set([normSem(bSem)])));
+  return CLASSES.filter(c=>c.stream===bStream&&c.sem===bSem);
 }
 
 function nextClass(){
@@ -1410,7 +1497,7 @@ function showStreamChips(){
   ]);
 }
 function showSemChips(){
-  const semOpts=bStream==='eng'?[1,2]:bStream==='biz'?[1,2]:[1,2];
+  const semOpts=[1,2];
   setChips(semOpts.map(s=>({
     label:`Semester ${s}`,
     action:()=>{
@@ -1442,7 +1529,16 @@ function handleQ(q){
   else if(q==='today'){const tc=cl.filter(c=>c.day===today).sort((a,b)=>toM(a.start)-toM(b.start));if(!tc.length)botMsg("No classes today! 🎉");else botMsg(`You have <strong>${tc.length}</strong> class${tc.length>1?'es':''} today:<br>${tc.map(c=>miniCard(c,'Today')).join('')}`);}
   else if(q==='tomorrow'){const tom=(today+1)%7;const tc=cl.filter(c=>c.day===tom).sort((a,b)=>toM(a.start)-toM(b.start));if(!tc.length)botMsg(`No classes ${DAYS_N[tom]}!`);else botMsg(`Tomorrow (${DAYS_N[tom]}) — <strong>${tc.length}</strong> class${tc.length>1?'es':''}:<br>${tc.map(c=>miniCard(c,DAYS_N[tom])).join('')}`);}
   else if(q==='week'){const byDay=DAYS_N.reduce((acc,d,i)=>{const dc=cl.filter(c=>c.day===i).sort((a,b)=>toM(a.start)-toM(b.start));if(dc.length)acc.push(`<strong>${d}</strong><br>${dc.map(c=>miniCard(c,d)).join('')}`);return acc;},[]);botMsg(byDay.length?`Here's your full week (${sl} Sem ${bSem}):<br><br>${byDay.join('<br>')}`:"No classes found this week.");}
-  else if(q==='hours'){const st=statsForFilters(new Set([bStream]),new Set([normSem(bSem)]));botMsg(`For ${sl} Semester ${bSem}:<br>📚 <strong>${st.sub}</strong> subjects · 🎓 <strong>${st.cls}</strong> sessions · ⏱ <strong>${st.hrs}</strong> total contact hours`);}
+  else if(q==='hours'){
+    const key=`${bStream}-s${bSem}`;
+    const ps=PRECISE_STATS[key];
+    if(ps){
+      botMsg(`📊 <strong>${sl} Semester ${bSem}</strong> weekly schedule:<br><br>📚 <strong>${ps.sub}</strong> subject${ps.sub>1?'s':''} &nbsp;·&nbsp; 🎓 <strong>${ps.cls}</strong> sessions/week &nbsp;·&nbsp; ⏱ <strong>${ps.hrs}</strong> contact hours/week &nbsp;·&nbsp; 📅 <strong>${ps.days}</strong> days/week`);
+    } else {
+      const st=computeStats(new Set([bStream]),new Set([`s${bSem}`]));
+      botMsg(`For ${sl} Semester ${bSem}:<br>📚 <strong>${st.sub}</strong> subjects · 🎓 <strong>${st.cls}</strong> sessions · ⏱ <strong>${st.hrs}</strong> total contact hours`);
+    }
+  }
   else if(q==='change'){bStream=null;bSem=null;botMsg("Sure! Let's start over. Which stream are you in?");showStreamChips();}
 }
 
@@ -1477,15 +1573,32 @@ function toggleBot(){
   botOpen=!botOpen;
   document.getElementById('bot-popup').classList.toggle('open',botOpen);
   document.getElementById('bot-badge').classList.add('hidden');
+  document.getElementById('bot-fab').classList.add('engaged');
   if(botOpen&&botState==='init'){
     botState='started';
     setTimeout(()=>{botMsg("Hi there! 👋 I'm your Monash schedule assistant. Let's get you set up — which stream are you in?");showStreamChips();},200);
   }
 }
 
+// ─── TODAY HIGHLIGHT ───────────────────────────────────────────────
+function markToday(){
+  const map={0:'sun',1:'mon',2:'tue',3:'wed',4:'thu'};
+  const key=map[new Date().getDay()];
+  if(!key)return; // Fri/Sat — no classes scheduled
+  const col=document.getElementById('dc-'+key);
+  if(!col)return;
+  col.classList.add('is-today');
+  const nameEl=col.querySelector('.day-name');
+  const tag=document.createElement('span');
+  tag.className='today-tag';
+  tag.innerHTML='<span class="today-pulse"></span>Today';
+  nameEl.insertAdjacentElement('afterend',tag);
+}
+
 // ─── INIT ─────────────────────────────────────────────────────────
 apply();
 initMobile();
+markToday();
 </script>
 </body>
 </html>
